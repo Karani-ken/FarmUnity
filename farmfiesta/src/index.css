@@ -11,3 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/**Dashboard styles */
+.dashboard{
+ 
+}
+.side-bar{ 
+  position: fixed;
+  background-color: blue;
+  width: 120px; 
+  text-align: center;
+  color: #fff;
+  border-radius: 20px 0 0 20px;
+  height: 75dvh;
+  margin: 0 10px ;
+}
+.side-bar hr{
+  border: 1px solid #fff;
+}
+.nav-links{
+   margin-top: 2rem;
+}
+.nav-links ul{
+  list-style: none;
+}
+.nav-links ul li{
+  margin: 15px 0;
+  border: 1px solid #fff; 
+  padding: 5px;
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+}
+.nav-links ul li:hover{
+  color: red;
+  background: #fff;
+}

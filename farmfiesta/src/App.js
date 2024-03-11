@@ -11,7 +11,7 @@ import ProductPage from "./Components/ProductPage";
 import AddProduct from "./Components/AddProduct";
 import Feed from "./Components/Feed";
 import ApplicationForm from "./MainComponents/ApplicationForm";
-import Dashboard from "./MainComponents/Dashboard";
+import { DashboardRoutes,Dashboard } from "./MainComponents/Dashboard";
 function App() {
   return (
     <div className="App">
@@ -27,7 +27,8 @@ function App() {
           <Route path="/cart" element={<Cart/>}/>
           <Route path="/product/:id" element={<ProductPage/>}/>   
           <Route path="/add-product" element={<AddProduct/>} />
-          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/*" element={<DashboardRoutes />} />
           <Route path="/feed" element={<Feed/>} />
         </Routes>
       </Router>

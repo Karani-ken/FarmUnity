@@ -1,28 +1,90 @@
 import React, { useState } from 'react'
 import Counties from './../Assets/Counties.json'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 const ApplicationForm = () => {
+  const navigate = useNavigate();
   const [userData, setUserData] = useState({
     name: '',
     email: '',
     phone: '',
     idNumber: '',
-    IdPhoto: '',
+    idPhoto: '',
     password: '',
-
+    role: 'farmer'
   })
   const handleChange = (e) => {
-    setUserData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }))
-  }
+    const { name, value, type } = e.target;
+
+    if (type === 'file') {
+      // For file inputs (e.g., ID photo), get the selected file
+      const file = e.target.files[0];
+
+      // Update state with the selected file
+      setUserData((prevState) => ({
+        ...prevState,
+        [name]: file // Store the file object directly in state
+      }));
+    } else {
+      // For other input types, update state with the input value
+      setUserData((prevState) => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData(); // Create FormData object
+
+      // Append form data to FormData object
+      formData.append('name', userData.name);
+      formData.append('email', userData.email);
+      formData.append('phone', userData.phone);
+      formData.append('idNumber', userData.idNumber);
+      formData.append('idPhoto', userData.idPhoto);
+      formData.append('password', userData.password);
+      formData.append('county', userData.county);
+      formData.append('role', userData.role)
+
+      // Send form data to the server using Axios
+      const response = await axios.post('/auth/register', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data' // Set content type for FormData
+        }
+      });
+
+      console.log('Registration successful:', response.data);
+      toast.success('registration successful')
+
+      setUserData({
+        name: '',
+        email: '',
+        phone: '',
+        idNumber: '',
+        idPhoto: '',
+        password: '',
+        county: '',
+        role: 'farmer'
+      });
+      
+      navigate('/login');
+
+    } catch (error) {
+      console.error('Registration failed:', error);
+      toast.error('An error!!')
+    }
+  };
   return (
     <div className="text-center" style={{ margin: "0 5%", height: "80vh" }}>
       <h4 className="fw-bold" style={{ color: "#6A6666" }}>
-        Create Seller Account
+        Create Farmers Account
       </h4>
-      <form
+      <form onSubmit={handleSubmit}
         className="shadow-lg p-lg-5 p-2 text-start"
         style={{ margin: "0 10%" }}
       >
@@ -57,7 +119,7 @@ const ApplicationForm = () => {
           <input
             type="number"
             className="form-control p-2"
-            name="number"
+            name="phone"
             value={userData.phone}
             placeholder="Enter your phone number"
             onChange={handleChange}
@@ -70,7 +132,7 @@ const ApplicationForm = () => {
             className="form-control p-2"
             name="idNumber"
             value={userData.idNumber}
-            placeholder="Enter your phone number"
+            placeholder="Enter your Id number"
             onChange={handleChange}
           />
         </div>
@@ -80,7 +142,6 @@ const ApplicationForm = () => {
             type="file"
             className="form-control p-2"
             name="idPhoto"
-            value={userData.IdPhoto}
             onChange={handleChange}
           />
         </div>

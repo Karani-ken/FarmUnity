@@ -9,7 +9,13 @@ const createUserTableQuery = `CREATE TABLE users (
     email VARCHAR(255) UNIQUE NOT NULL,
     phone INT,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(255)      
+    role VARCHAR(255),
+    county VARCHAR(255),
+    idNumber INT,
+    idPhoto VARCHAR(255),  
+    profilePic VARCHAR(255),
+    address VARCHAR(255) 
+
 )
 `
 const useDatabaseQuery = `USE ${dbConfig.database}`;

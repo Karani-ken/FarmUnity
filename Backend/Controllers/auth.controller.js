@@ -1,10 +1,12 @@
 const bcrypt = require('bcrypt')
 const dbHandler = require('../Database/dbHandler')
+const { uploadToCloudinary } = require('../Services/cloudinary');
 const jwt = require("jsonwebtoken")
 const sendEmail = require('../Middlewares/email.middleware')
 const register = async (req, res) => {
     try {
-        const { name, email, password, phone,role } = req.body;
+        const { name, email, password, phone,role,county,idNumber } = req.body;
+        const idPhoto =  req.file.path;
         if (!name || !email || !password) {
             return res.status(400).json({ error: "All fields are required" });
         }
@@ -12,6 +14,9 @@ const register = async (req, res) => {
         if(user.length > 0){
            return res.status(400).json({message: " email already exists"});
         }
+        const data  = await uploadToCloudinary(idPhoto, "test-one")
+        //save image url and publicID to the database
+        const imageUrl = data.url;
         //hash the password before saving it
         const hashedPassword = await bcrypt.hash(password, 10);
         const userData = {
@@ -20,6 +25,10 @@ const register = async (req, res) => {
             password: hashedPassword,
             phone,
             role,   
+            county,
+            idNumber,
+            idPhoto:imageUrl,
+            
         }      
         await dbHandler.insertUser(userData);
         sendEmail(email, "Welcome to FarmFiesta", "Thank you for registering with us");

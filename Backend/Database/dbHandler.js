@@ -52,18 +52,18 @@ const createTableIfNotExists = async ()=>{
             }
           }
     } catch (error) {
-        throw error;
+       console.log(error)
     }
 }
 
 //insert a user 
 const insertUser = async (userData) =>{
-    const {name, email, password, phone,role} = userData;
+    const {name, email, password, phone,role,idPhoto, idNumber, county} = userData;
     try {
-        await executeQuery(queries.insertUsersQuery, [name, email,password,phone,role]);
+        await executeQuery(queries.insertUsersQuery, [name, email,password,phone,role,idNumber,idPhoto,county]);
         console.log('user added successfully')
     } catch (error) {
-        throw error;
+        console.log(error)
     }
 }
 //select a user by email
