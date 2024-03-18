@@ -100,10 +100,10 @@ const selectUsers = async () =>{
 //insert a new product to the database
 const insertProduct = async (productData) =>{
     const {product_name, product_description, 
-        product_price, product_rating, product_image, user_id} = productData;
+        product_price, product_image, user_id} = productData;
         try {
             await executeQuery(queries.insertProducts, [product_name,product_description,
-             product_price, product_rating, product_image, user_id])
+             product_price, product_image, user_id])
              console.log("product added successfully");
             
         } catch (error) {
