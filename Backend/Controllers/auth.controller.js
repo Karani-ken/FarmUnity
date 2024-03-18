@@ -6,7 +6,8 @@ const sendEmail = require('../Middlewares/email.middleware')
 const register = async (req, res) => {
     try {
         const { name, email, password, phone,role,county,idNumber } = req.body;
-        const idPhoto =  req.file.path;
+        const idPhoto =  req.file?.path;
+        let imageUrl;
         if (!name || !email || !password) {
             return res.status(400).json({ error: "All fields are required" });
         }
@@ -14,9 +15,15 @@ const register = async (req, res) => {
         if(user.length > 0){
            return res.status(400).json({message: " email already exists"});
         }
-        const data  = await uploadToCloudinary(idPhoto, "test-one")
-        //save image url and publicID to the database
-        const imageUrl = data.url;
+        if (!idPhoto) {  
+            imageUrl= null;
+        } else {
+            // If idPhoto is provided, upload it to Cloudinary
+            const data = await uploadToCloudinary(idPhoto, "test-one");
+             imageUrl = data.url; // Assign the uploaded image URL to idPhoto
+        }
+                //save image url and publicID to the database
+      
         //hash the password before saving it
         const hashedPassword = await bcrypt.hash(password, 10);
         const userData = {

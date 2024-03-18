@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { jwtDecode } from 'jwt-decode'
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const handleAddProduct = ()=>{
-      navigate('/add-product')
+  const [isLoggedIn, setIsloggedIn] = useState(false);
+  const token = localStorage.getItem('token');
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    if (token) {
+      setIsloggedIn(true);
+      const decoded = jwtDecode(token);
+      setUserData(decoded);
+    } else {
+      setIsloggedIn(false)
+      setUserData(null);
+    }
+  }, [token])
+  const handleAddProduct = () => {
+    navigate('/add-product')
   }
   return (
     <div className='dashboard'>
-      <h1>Welcome John Doe</h1>
+      <h1>Welcome {userData && userData.name}</h1>
       <div className="profile-details">
         <div className="details-container">
           <div className='small-container'>
@@ -49,6 +62,7 @@ const Dashboard = () => {
         </div>
         <button className='btn btn-primary mt-2'>Edit</button>
       </div>
+      {userData && userData.role === 'farmer'&& (
       <div className="profile-details">
         <h3>Products</h3>
         <div className="details-container">
@@ -61,33 +75,35 @@ const Dashboard = () => {
                 <li>Carrots</li>
               </ul>
               <button className='btn btn-success' onClick={handleAddProduct}>Add Product</button>
-            </div>            
+            </div>
           </div>
           <div className="small-container">
             <h4>Manage products</h4>
             <div className="form-control">
               <label>Potatoes</label>
               <div className="product-card">
-                  <ul>
-                    <li>Quatity: 30sacks</li>
-                    <li>Price: 3000 kes per sack</li>                  
-                  </ul>     
-                  <button className='btn btn-primary'>Manage</button>             
+                <ul>
+                  <li>Quatity: 30sacks</li>
+                  <li>Price: 3000 kes per sack</li>
+                </ul>
+                <button className='btn btn-primary'>Manage</button>
               </div>
             </div>
             <div className="form-control">
               <label>Cabbages</label>
               <div className="product-card">
-                  <ul>
-                    <li>Quatity: 900 pieces</li>
-                    <li>Price: 30 kes per piece</li>                  
-                  </ul>     
-                  <button className='btn btn-primary'>Manage</button>             
+                <ul>
+                  <li>Quatity: 900 pieces</li>
+                  <li>Price: 30 kes per piece</li>
+                </ul>
+                <button className='btn btn-primary'>Manage</button>
               </div>
             </div>
           </div>
         </div>
       </div>
+      )}
+
 
     </div>
   )

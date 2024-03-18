@@ -36,8 +36,8 @@ const createProductsTable = `CREATE TABLE Products (
     FOREIGN KEY (user_id) REFERENCES users(ID) ON DELETE CASCADE
 );`
 
-const insertProducts = `INSERT INTO Product (product_id, product_name, product_description, product_rating, product_image, product_price, user_id)
-VALUES (?, ?, ?, ?, ?, ?, ?);
+const insertProducts = `INSERT INTO Products (product_name, product_description, product_rating, product_image, product_price, user_id)
+VALUES (?, ?, ?, ?, ?, ?)
 `
 const updateProduct = `  UPDATE Product
   SET product_name = ?,

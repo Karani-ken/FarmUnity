@@ -102,7 +102,7 @@ const insertProduct = async (productData) =>{
     const {product_name, product_description, 
         product_price, product_rating, product_image, user_id} = productData;
         try {
-            await executeQuery(queries.insertProduct, [product_name,product_description,
+            await executeQuery(queries.insertProducts, [product_name,product_description,
              product_price, product_rating, product_image, user_id])
              console.log("product added successfully");
             

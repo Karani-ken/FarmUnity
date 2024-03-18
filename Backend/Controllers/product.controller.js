@@ -9,12 +9,13 @@ const addProduct = async (req, res) => {
         
         // Decode the JWT token to get the user_id
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const user_id = decodedToken.user_id;
+        const user_id = decodedToken.userId;
+        console.log(user_id)
         const {product_name, product_description, product_price} = req.body;
-        const [product_image] = req.file.path;
+        const product_image = req.file.path;
         //null checking
         if (!product_name || !product_description
-            || !product_price) {
+            || !product_price) {   
          res.status(400).json({error:"All fields are required!!!"});
         }
         //upload product image to cloudinary
@@ -30,7 +31,7 @@ const addProduct = async (req, res) => {
             user_id 
         }
         //insert the product into the database
-        await dbHandler.insertProduct(productData);
+        await dbHandler.insertProduct(productData);   
         res.status(201).json({ message: "Product added successfully!" });
 
     } catch (error) {
