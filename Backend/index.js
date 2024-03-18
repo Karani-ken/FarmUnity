@@ -17,7 +17,7 @@ dbHandler.pool.getConnection((err, connection)=>{
     console.log("MySQL connected successfully");   
     dbHandler.initializeDatabase()
     .then(()=>{
-       connection.release()
+       connection.release()                
     })
     .catch((err)=>{
         connection.release();   
@@ -28,5 +28,5 @@ app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
 app.use('/posts',postsRoutes)
 app.listen(port,()=>{
-    console.log(`App started on http://localhost:${port}`);
+    console.log(`App started on http://localhost:${port}`);    
 })

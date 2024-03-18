@@ -1,40 +1,96 @@
-import React from 'react';
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
-import Profile from './DashboardComponents/Profile';
-import Cart from './DashboardComponents/Cart';
-import Products from './DashboardComponents/Products';
-import Posts from './DashboardComponents/Posts';
-import Sales from './DashboardComponents/Sales';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const handleAddProduct = ()=>{
+      navigate('/add-product')
+  }
   return (
-    <div className="dashboard">
-      <div className="sidebar">
-        <ul>
-          <li><Link to="profile">Profile</Link></li>
-          <li><Link to="cart">Cart</Link></li>
-          <li><Link to="products">Products</Link></li>
-          <li><Link to="posts">Posts</Link></li>
-          <li><Link to="sales">Sales</Link></li>
-        </ul>
+    <div className='dashboard'>
+      <h1>Welcome John Doe</h1>
+      <div className="profile-details">
+        <div className="details-container">
+          <div className='small-container'>
+            <h4>Personal Details</h4>
+            <div className="form-control">
+              <label>Name</label>
+              <p>John Doe</p>
+            </div>
+            <div className="form-control">
+              <label>Email</label>
+              <p>example@gamil.com</p>
+            </div>
+            <div className="form-control">
+              <label>Phone</label>
+              <p>+254712345678</p>
+            </div>
+            <div className="form-control">
+              <label>Id No.</label>
+              <p>39589924</p>
+            </div>
+          </div>
+          <div className="small-container">
+            <h4>Address</h4>
+            <div className="form-control">
+              <label>County</label>
+              <p>Nyeri</p>
+            </div>
+            <div className="form-control">
+              <label>Town</label>
+              <p>Karatina</p>
+            </div>
+            <div className="form-control">
+              <label>Postal code</label>
+              <p>771, Karatina</p>
+            </div>
+          </div>
+        </div>
+        <button className='btn btn-primary mt-2'>Edit</button>
       </div>
-      <div className="content">
-        <Outlet />
+      <div className="profile-details">
+        <h3>Products</h3>
+        <div className="details-container">
+          <div className="small-container">
+            <h4>My products</h4>
+            <div className="form-control">
+              <ul>
+                <li>Potatoes</li>
+                <li>Cabbages</li>
+                <li>Carrots</li>
+              </ul>
+              <button className='btn btn-success' onClick={handleAddProduct}>Add Product</button>
+            </div>            
+          </div>
+          <div className="small-container">
+            <h4>Manage products</h4>
+            <div className="form-control">
+              <label>Potatoes</label>
+              <div className="product-card">
+                  <ul>
+                    <li>Quatity: 30sacks</li>
+                    <li>Price: 3000 kes per sack</li>                  
+                  </ul>     
+                  <button className='btn btn-primary'>Manage</button>             
+              </div>
+            </div>
+            <div className="form-control">
+              <label>Cabbages</label>
+              <div className="product-card">
+                  <ul>
+                    <li>Quatity: 900 pieces</li>
+                    <li>Price: 30 kes per piece</li>                  
+                  </ul>     
+                  <button className='btn btn-primary'>Manage</button>             
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
-  );
-};
+  )
+}
 
-const DashboardRoutes = () => {
-  return (
-    <Routes>
-      <Route path="profile" element={<Profile />} />
-      <Route path="cart" element={<Cart />} />
-      <Route path="products" element={<Products />} />
-      <Route path="posts" element={<Posts />} />
-      <Route path="sales" element={<Sales />} />
-    </Routes>
-  );
-};
-
-export { Dashboard, DashboardRoutes };
+export default Dashboard   
