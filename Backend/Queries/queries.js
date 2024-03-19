@@ -48,10 +48,10 @@ const updateProduct = `  UPDATE Product
   WHERE product_id = ? AND
   user_id = ? ;
 `;
-const getProducts = `SELECT * FROM Product ORDER BY product_id ASC`
+const getProducts = `SELECT * FROM Products ORDER BY product_id ASC;`
 const deleteProduct = `DELETE FROM Products WHERE product_id = ? AND user_id = ?`
 const getProductByID = `SELECT * FROM products WHERE product_id = ? AND user_id = ?`
-const getProductCount = `SELECT COUNT() FROM products`
+const getProductCount = `SELECT COUNT(*) FROM products`
 
 //posts queries
 const showPostsTableQuery = 'SHOW TABLES LIKE "posts"';

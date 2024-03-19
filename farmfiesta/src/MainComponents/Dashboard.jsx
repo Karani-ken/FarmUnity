@@ -29,11 +29,11 @@ const Dashboard = () => {
             <h4>Personal Details</h4>
             <div className="form-control">
               <label>Name</label>
-              <p>John Doe</p>
+              <p>{userData && userData.name}</p>
             </div>
             <div className="form-control">
               <label>Email</label>
-              <p>example@gamil.com</p>
+              <p>{userData && userData.email}</p>
             </div>
             <div className="form-control">
               <label>Phone</label>
@@ -57,7 +57,7 @@ const Dashboard = () => {
             <div className="form-control">
               <label>Postal code</label>
               <p>771, Karatina</p>
-            </div>
+            </div>             
           </div>
         </div>
         <button className='btn btn-primary mt-2'>Edit</button>

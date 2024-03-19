@@ -5,7 +5,7 @@ export const selectCart = (state) => state.cart;
 export const getTotalCartAmount = (state) => {
   let totalCartAmount = 0;
   for (const item of selectCart(state).cart) {
-    totalCartAmount += item.price * item.count;
+    totalCartAmount += item.product_price * item.count;
   }
   return totalCartAmount;
 };
@@ -17,7 +17,7 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const existingProductIndex = state.cart.findIndex(
-        (x) => x.id === action.payload.id
+        (x) => x.product_id === action.payload.id
       );
       if (existingProductIndex !== -1) {
         //product already exists increase count
@@ -30,12 +30,12 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      state.cart = state.cart.filter((x) => x.id !== action.payload.id);
+      state.cart = state.cart.filter((x) => x.product_id !== action.payload.product_id);
       toast.success("Product was removed")
     },
     increaseCount: (state, action) => {
       const existingProductIndex = state.cart.findIndex(
-        (x) => x.id === action.payload.id
+        (x) => x.product_id === action.payload.product_id
       );
       if (existingProductIndex !== -1) {
         //product already exists increase count
@@ -45,13 +45,13 @@ const cartSlice = createSlice({
     },
     decreaseCount: (state, action) => {
       const existingProductIndex = state.cart.findIndex(
-        (x) => x.id === action.payload.id
+        (x) => x.product_id === action.payload.product_id
       );
       if (existingProductIndex !== -1) {
         //product already exists increase count
         state.cart[existingProductIndex].count -= 1;
         if (state.cart[existingProductIndex].count === 0) {
-          state.cart = state.cart.filter((x) => x.id !== action.payload.id);
+          state.cart = state.cart.filter((x) => x.product_id !== action.payload.product_id);
         }
       }
     },       

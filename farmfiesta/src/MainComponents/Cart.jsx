@@ -30,17 +30,15 @@ function Cart() {
         <div>
           {cartItems.map((item) => {
             return (
-              <div key={item.id} className="row shadow-sm m-3">
+              <div key={item.product_id} className="row shadow-sm m-3">
                 <div className="col-lg-3">
-                  <img src={item.image} alt="" style={{ width: "70%" }} />
-                  <h5>{item.name}</h5>
+                  <img src={item.product_image} alt="" style={{ width: "70%" }} />
+                  <h5>{item.product_name}</h5>
                 </div>
                 <div className="col-lg-3 text-center">
-                  <h6>Description</h6>
-                  <p>{item.description}</p>
                   <button
                     className="btn btn-warning btn-sm"
-                    onClick={() => dispatch(removeFromCart({ id: item.id }))}
+                    onClick={() => dispatch(removeFromCart({ product_id: item.product_id }))}
                   >
                     Remove
                   </button>
@@ -50,14 +48,14 @@ function Cart() {
                   <div className="d-flex justify-content-around">
                     <button
                       className="btn btn-danger btn-sm fw-bold"
-                      onClick={() => dispatch(decreaseCount({ id: item.id }))}
+                      onClick={() => dispatch(decreaseCount({ product_id: item.product_id }))}
                     >
                       -
                     </button>
                     <h4>{item.count}</h4>
                     <button
                       className="btn btn-info text-white btn-sm fw-bold"
-                      onClick={() => dispatch(increaseCount({ id: item.id }))}
+                      onClick={() => dispatch(increaseCount({ product_id: item.product_id }))}
                     >
                       +
                     </button>
@@ -65,7 +63,7 @@ function Cart() {
                 </div>
                 <div className="col-lg-3">
                   <h6>Amount</h6>
-                  <h3>${(item.price * item.count).toFixed(2)}</h3>
+                  <h3>Kes {(item.product_price * item.count).toFixed(2)}</h3>
                 </div>
               </div>
             );
@@ -74,7 +72,7 @@ function Cart() {
             <div className="w-lg-25">
               <div className="card p-3 shadow-lg" style={{ border: "none" }}>
                 <h4>Total Amount</h4>
-                <p className="fw-bold">$ {totalAmount.toFixed(2)}</p>
+                <p className="fw-bold">KES. {totalAmount.toFixed(2)}</p>
               </div>
               <Link to="/shop">
                 <button
