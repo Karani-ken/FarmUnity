@@ -82,7 +82,7 @@ function Cart() {
                   Continue Shopping
                 </button>
               </Link>
-              <button className="btn btn-success m-2">Checkout Cart</button>
+              <button className="btn btn-success m-2">Place Order</button>
             </div>
           </div>
         </div>

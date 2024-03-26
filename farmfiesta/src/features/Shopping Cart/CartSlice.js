@@ -54,7 +54,8 @@ const cartSlice = createSlice({
           state.cart = state.cart.filter((x) => x.product_id !== action.payload.product_id);
         }
       }
-    },       
+    },    
+       
   }
  
 });

@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./Routes/auth.routes')
 const productRoutes = require('./Routes/products.routes')
 const postsRoutes = require("./Routes/post.routes")
+const orderRoutes = require("./Routes/order.routes")
 const app = express();
 app.use(cors())
 const port = process.env.PORT;
@@ -24,9 +25,10 @@ dbHandler.pool.getConnection((err, connection)=>{
         throw err;    
     })
 })
-app.use('/auth', authRoutes)
-app.use('/products', productRoutes)
-app.use('/posts',postsRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/products', productRoutes)
+app.use('/api/posts',postsRoutes)
+app.use('/api/orders/', orderRoutes)
 app.listen(port,()=>{
     console.log(`App started on http://localhost:${port}`);    
 })
