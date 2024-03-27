@@ -171,13 +171,13 @@ const createOrder = async (orderData, orderItemsData) => {
     const { user_id, status } = orderData;
     try {
         // Insert into orders table
-        const orderResult = await executeQuery(queries.createOrder, [user_id, stripeSessionId, paymentIntentId, status]);
+        const orderResult = await executeQuery(queries.createOrder, [user_id, status]);
         const orderId = orderResult.insertId; // Get the generated order_id
 
-        // Insert into order_items table
+        // Insert into order_items table   
         for (const itemData of orderItemsData) {
             const { product_id, product_name, product_image, product_price, quantity } = itemData;
-            await executeQuery(queries.createOrderItem, [orderId, product_id, product_name, product_image, product_price, quantity]);
+            await executeQuery(queries.insertOrderItems, [orderId, product_id, product_name, product_image, product_price, quantity]);
         }
 
         console.log("Order was placed successfully");
@@ -187,10 +187,19 @@ const createOrder = async (orderData, orderItemsData) => {
 };
 
 //update order
-const updateOrder = async (order_id, updatedOrderData) => {
+const updateOrder = async (updatedOrder) => {
     try {
-        const { user_id, stripeSessionId, paymentIntentId, status } = updatedOrderData;
-        await executeQuery(queries.updateOrder, [user_id, stripeSessionId, paymentIntentId, status, order_id]);
+        const {stripeSessionId,status,order_id,user_id} = updatedOrder;
+        await executeQuery(queries.updateOrder, [stripeSessionId,status,order_id,user_id]);
+        console.log("Order was successfully updated");
+    } catch (error) {
+        console.log(error);
+    }
+};
+const confirmPayment = async (updatedOrder) => {
+    try {
+        const {stripeSessionId,paymentIntentId,status,order_id,user_id} = updatedOrder;
+        await executeQuery(queries.confirmPayment, [stripeSessionId,paymentIntentId,status,order_id,user_id]);
         console.log("Order was successfully updated");
     } catch (error) {
         console.log(error);
@@ -236,7 +245,8 @@ const fetchOrderById = async (order_id) => {
 }
 const orderWithItems = async (order_id) => {
     try {
-        const result = await executeQuery(queries.fetchOrderById, [order_id])
+        const result = await executeQuery(queries.fetchOrderWithOrderItems , [order_id])
+        console.log(result)
         return result;
     } catch (error) {
         console.log(error)
@@ -286,5 +296,6 @@ module.exports = {
     fetchAllOrders,
     fetchUnpaidOrders,
     fetchOrderById,
-    orderWithItems
+    orderWithItems,
+    confirmPayment
 }

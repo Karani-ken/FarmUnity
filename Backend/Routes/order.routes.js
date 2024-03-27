@@ -29,9 +29,9 @@ router.get('/fetch-all-orders', getAllUserOrders);
 router.get('/fetch-unpaid-orders/:userId', getAllUserUnpaidOrders);
 
 // Process payment using Stripe
-router.post('/stripe-payment', stripePayment);
+router.post('/stripe-payment/:orderId', stripePayment);
 
-// Validate payment status
-router.post('/validate-payment', validatePayment);
+// Validate payment status   
+router.post('/validate-payment/:orderId', validatePayment);
 
 module.exports = router;

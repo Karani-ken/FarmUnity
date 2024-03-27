@@ -75,28 +75,26 @@ const getAllUserUnpaidOrders = async (req, res) => {
 
 //TODO: stripe payment
 const stripePayment = async (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    // Decode the JWT token to get the user_id
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    const user_id = decodedToken.userId;
+    const order_id = req.params.orderId;
+    console.log(order_id)
+    const order = await dbHandler.fetchOrderById(order_id)
+    const user_id = order.user_id;
     let totalOrderAmount = 0;
     const { approvedUrl, cancelUrl } = req.body
     try {
-        const order_id = res.params
         const results = await dbHandler.orderWithItems(order_id);
         for (const orderItem of results) {
             totalOrderAmount += orderItem.product_price * orderItem.quantity;
         }
+        const description = results.map(product => `${product.product_name} (${product.product_price} KES)`).join(', ');
         const sessionLineItems = [{
             price_data: {
                 currency: 'kes',
                 product_data: {
                     name: 'Farm Unity Payment',
-                    description: results.map(items => {
-                        return items.product_name
-                    })
+                    description: description
                 },
-                unit_amout: totalOrderAmount * 100
+                unit_amount: totalOrderAmount * 1000
             },
             quantity: 1
         }];
@@ -109,47 +107,67 @@ const stripePayment = async (req, res) => {
 
         const session = await stripe.checkout.sessions.create(sessionOptions);
         let stripeSessionId = session.id;
+        console.log(stripeSessionId)
+        let stripeSessionUrl = session.url;
+        let status = 'pending';
         const updatedOrder = {
             stripeSessionId,
+            status,
             user_id,
             order_id
         }
         await dbHandler.updateOrder(updatedOrder);
-        res.status(201).json({ message: "Order was updated successfully" })
+        res.status(201).json({ stripeSessionUrl })
     } catch (error) {
         res.status(500).json(error)
     }
 }
 const validatePayment = async (req, res) => {
+    const order_id = req.params.orderId;
+    console.log(order_id)
     const token = req.headers.authorization.split(' ')[1];
     // Decode the JWT token to get the user_id
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const user_id = decodedToken.userId;
-    let order_id = req.params
+
     try {
         const order = await dbHandler.fetchOrderById(order_id);
-        const session = await stripe.checkout.sessions.retrieve(order.stripeSessionId);
-        if (!session.payment_intent) {
-            return false;
+        console.log(order)
+        const session_id = order[0].stripeSessionId; // Retrieve session ID from the order object
+        if (!session_id) {
+            res.status(400).json({ error: "Session ID not found for the order" });
+            return;
         }
 
-        const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent)
+        const session = await stripe.checkout.sessions.retrieve(session_id);
+        console.log(session)
+        if (!session.payment_intent) {
+            res.status(400).json({ error: "Payment session not found" });
+            return;
+        }
+
+        const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent);
+        console.log(paymentIntent.id);
 
         if (paymentIntent.status === 'succeeded') {
             const updatedOrder = {
                 paymentIntentId: paymentIntent.id,
-                paymentStatus: 'Approved',
+                status: 'Approved',
                 user_id,
                 order_id
             }
-            await dbHandler.updateOrder(updatedOrder)
-            return true;
+            await dbHandler.confirmPayment(updatedOrder);
+            console.log('Payment confirmed');
+            res.status(200).json({ message: "Payment confirmed" });
+            return;
         }
-        return false;
+        res.status(400).json({ error: "Payment not succeeded" });
     } catch (error) {
-        res.status(500).json(error)
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
+
 
 
 
@@ -157,7 +175,7 @@ module.exports = {
     createOrder,
     deleteOrder,
     updateOrder,
-    getAllUserOrders ,
+    getAllUserOrders,
     getAllUserUnpaidOrders,
     stripePayment,
     validatePayment

@@ -30,5 +30,5 @@ app.use('/api/products', productRoutes)
 app.use('/api/posts',postsRoutes)
 app.use('/api/orders/', orderRoutes)
 app.listen(port,()=>{
-    console.log(`App started on http://localhost:${port}`);    
+    console.log(`App started on http://localhost:${port}`);       
 })
