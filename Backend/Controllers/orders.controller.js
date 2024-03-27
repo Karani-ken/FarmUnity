@@ -158,7 +158,7 @@ const validatePayment = async (req, res) => {
             }
             await dbHandler.confirmPayment(updatedOrder);
             console.log('Payment confirmed');
-            res.status(200).json({ message: "Payment confirmed" });
+            res.status(200).json({ message: "Payment confirmed" });   
             return;
         }
         res.status(400).json({ error: "Payment not succeeded" });

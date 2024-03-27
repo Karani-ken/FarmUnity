@@ -1,16 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { placeOrder } from "../features/Orders/OrdersSlice"; // Import the placeOrder action
 import {
   removeFromCart,
   increaseCount,
   decreaseCount,
   getTotalCartAmount,
 } from "../features/Shopping Cart/CartSlice";
+
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cart);
   const totalAmount = useSelector(getTotalCartAmount);
   const dispatch = useDispatch();
+
+  // Function to handle placing order
+  const handlePlaceOrder = () => {
+    dispatch(placeOrder()); // Dispatch the placeOrder action
+  };
+
   return (
     <div className="text-center " style={{ margin: "0 5%" }}>
       <h1>Shopping Cart</h1>
@@ -82,7 +90,7 @@ function Cart() {
                   Continue Shopping
                 </button>
               </Link>
-              <button className="btn btn-success m-2">Place Order</button>
+              <button className="btn btn-success m-2" onClick={handlePlaceOrder}>Place Order</button> {/* Add onClick handler */}
             </div>
           </div>
         </div>
