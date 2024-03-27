@@ -53,6 +53,7 @@ const getAllUserOrders = async (req, res) => {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decodedToken.userId;
+        console.log(userId)
         const orders = await dbHandler.fetchAllOrders(userId);
         res.status(200).json(orders);
     } catch (error) {

@@ -12,6 +12,7 @@ import AddProduct from "./Components/AddProduct";
 import Feed from "./Components/Feed";
 import ApplicationForm from "./MainComponents/ApplicationForm";
 import Dashboard from "./MainComponents/Dashboard";
+import Orders from "./Components/Orders";
 function App() {
   return (
     <div className="App">
@@ -29,6 +30,7 @@ function App() {
           <Route path="/add-product" element={<AddProduct/>} />
           <Route path="/dashboard" element={<Dashboard />} />         
           <Route path="/feed" element={<Feed/>} />
+          <Route path="/orders" element={<Orders/>} />
         </Routes>
       </Router>
     </div>

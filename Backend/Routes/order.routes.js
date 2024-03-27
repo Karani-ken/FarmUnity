@@ -26,7 +26,7 @@ router.put('/update-order/:orderId', updateOrder);
 router.get('/fetch-all-orders', getAllUserOrders);
 
 // Fetch unpaid orders for a specific user
-router.get('/fetch-unpaid-orders/:userId', getAllUserUnpaidOrders);   
+router.get('/fetch-unpaid-orders', getAllUserUnpaidOrders);   
 
 // Process payment using Stripe
 router.post('/stripe-payment/:orderId', stripePayment);

@@ -39,9 +39,9 @@ export const deleteProduct = (productId) => async (dispatch) => {
     }
 }
 
-export const updateProduct = (productId, updatedProductData) => async (dispatch) => {
+export const updateProduct = (productId, updatedProduct) => async (dispatch) => {
     try {
-        await axios.put(`/products/update-product/${productId}`, updateProduct);
+        await axios.put(`/products/update-product/${productId}`, updatedProduct);
         dispatch(fetchProducts())
         toast.success('prodcut was updated')
     } catch (error) {

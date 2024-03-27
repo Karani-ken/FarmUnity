@@ -5,7 +5,7 @@ import axios from "axios";
 const OrdersSlice = createSlice({
     name: 'orders',
     initialState: {
-        orderItems: [],
+        orders: [],
         loading: false, // Add loading state
         error: null // Add error state
     },
@@ -23,12 +23,27 @@ const OrdersSlice = createSlice({
             state.loading = false;
             state.error = action.payload.error; // Update error state with payload
             toast.error("Failed to create order"); // Display an error message
+        },
+        fetchOrdersRequest(state) {
+            state.loading = true;
+            state.error = null;
+        },
+
+        fetchOrdersSuccess(state, action) {
+            state.loading = false;
+            state.orders = action.payload;  // Update orderItems with fetched orders
+        },
+
+        fetchOrdersFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload.error;
         }
     }
 });
 
 // Export actions for external use
-export const { createOrderRequest, createOrderSuccess, createOrderFailure } = OrdersSlice.actions;
+export const { createOrderRequest, createOrderSuccess, createOrderFailure,
+    fetchOrdersRequest, fetchOrdersSuccess, fetchOrdersFailure } = OrdersSlice.actions;
 
 // Export the reducer
 export default OrdersSlice.reducer;
@@ -45,11 +60,28 @@ export const createOrder = (orderItemsData) => async (dispatch) => {
                 'Authorization': `Bearer ${token}`
             }
         });
+
         dispatch(createOrderSuccess(response.data));
         toast.success("Order placed successfully");
     } catch (error) {
         dispatch(createOrderFailure({ error: error.message }));
         toast.error("failed to place order");
+    }
+};
+//TODO:FETCH ORDERS
+export const fetchOrders = () => async (dispatch) => {
+    dispatch(fetchOrdersRequest());
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get("/orders/fetch-all-orders", {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        console.log(response.data)
+        dispatch(fetchOrdersSuccess(response.data));
+    } catch (error) {
+        dispatch(fetchOrdersFailure({ error: error.message }));
     }
 };
 
