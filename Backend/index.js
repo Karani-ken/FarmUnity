@@ -20,11 +20,11 @@ dbHandler.pool.getConnection((err, connection)=>{
     .then(()=>{
        connection.release()                
     })
-    .catch((err)=>{
+    .catch((err)=>{   
         connection.release();   
         throw err;    
     })
-})
+})   
 app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/posts',postsRoutes)

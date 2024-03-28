@@ -1,14 +1,32 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../features/Orders/OrdersSlice'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 const Orders = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state?.orders?.orders);
-
+  const response = useSelector((state) => state.orders);
+  const { orders } = response
   useEffect(() => {
     dispatch(fetchOrders()); // Fetch orders when the component mounts
   }, [dispatch]);
-
+  const handlePayment = async (orderId) => {
+    try {
+      const approvedUrl = "https://www.facebook.com"
+      const cancelUrl = "https://www.youtube.com"
+      const redirectUrls = {
+        approvedUrl,
+        cancelUrl
+      }
+      const response = await axios.post(`/orders/stripe-payment/${orderId}`, redirectUrls )
+      const stripeRequestUrl = response.data.stripeSessionUrl;
+      console.log(stripeRequestUrl)
+      window.location.href = stripeRequestUrl;
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div>
       <h3>All Orders</h3>
@@ -24,22 +42,18 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders && orders?.length >= 0 ?
-              orders?.map((order) => (
-                <tr key={order.order_id}>
-                  <td>{order.order_id}</td>
-                  <td>{order.order_date}</td>
-                  <td>{order.status}</td>
-                  <td></td>
-                  <td>
-                    <button className="btn btn-primary">Pay</button>
-                    <button className="btn btn-outline-danger mx-2">Cancel</button>
-                  </td>
-                </tr>
-              )) : (
-                <p>No orders yet!!</p>
-              )
-            }
+            {orders?.map((order) => (
+              <tr key={order.order_id}>
+                <td>{order.order_id}</td>
+                <td>{new Date(order.order_date).toLocaleString()}</td>
+                <td>{order.status}</td>
+                <td>{/* Display order items here */}</td>
+                <td>
+                  <button className="btn btn-primary" onClick={() => handlePayment(order.order_id)}>Pay</button>
+                  <button className="btn btn-outline-danger mx-2">Cancel</button>
+                </td>
+              </tr>
+            ))}
 
           </tbody>
         </table>

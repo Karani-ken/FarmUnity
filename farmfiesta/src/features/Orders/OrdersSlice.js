@@ -28,16 +28,30 @@ const OrdersSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-
-        fetchOrdersSuccess(state, action) {
+        fetchOrdersSuccess: (state, action) => {
+            const { orders } = action.payload
             state.loading = false;
-            state.orders = action.payload;  // Update orderItems with fetched orders
+            state.orders = orders  // Update orderItems with fetched orders
         },
-
         fetchOrdersFailure(state, action) {
             state.loading = false;
             state.error = action.payload.error;
+        },
+        fetchPaymentRequest(state) {
+            state.loading = true;
+            state.error = null;
+            toast.info("Initializing payment");
+        },
+        fetchPaymentSuccess(state, action) {
+            state.loading = false;
+            toast.success("Payment successfull")
+        },
+        fetchPaymentFailure(state, action) {
+            state.loading = false;
+            state.error = action.payload.error;
+            toast.error("Payment failed")
         }
+
     }
 });
 
@@ -46,9 +60,7 @@ export const { createOrderRequest, createOrderSuccess, createOrderFailure,
     fetchOrdersRequest, fetchOrdersSuccess, fetchOrdersFailure } = OrdersSlice.actions;
 
 // Export the reducer
-export default OrdersSlice.reducer;
 
-// Thunk action to handle asynchronous operation
 // Thunk action to handle asynchronous operation
 export const createOrder = (orderItemsData) => async (dispatch) => {
     dispatch(createOrderRequest());
@@ -78,7 +90,6 @@ export const fetchOrders = () => async (dispatch) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        console.log(response.data)
         dispatch(fetchOrdersSuccess(response.data));
     } catch (error) {
         dispatch(fetchOrdersFailure({ error: error.message }));
@@ -102,3 +113,6 @@ export const placeOrder = () => async (dispatch, getState) => {
         console.log(error)
     }
 };
+
+
+export default OrdersSlice.reducer;

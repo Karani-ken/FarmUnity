@@ -53,9 +53,8 @@ const getAllUserOrders = async (req, res) => {
         const token = req.headers.authorization.split(' ')[1];
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decodedToken.userId;
-        console.log(userId)
         const orders = await dbHandler.fetchAllOrders(userId);
-        res.status(200).json(orders);
+        res.status(200).json({ orders });
     } catch (error) {
         res.status(500).json(error);
     }
@@ -77,7 +76,6 @@ const getAllUserUnpaidOrders = async (req, res) => {
 //TODO: stripe payment
 const stripePayment = async (req, res) => {
     const order_id = req.params.orderId;
-    console.log(order_id)
     const order = await dbHandler.fetchOrderById(order_id)
     const user_id = order.user_id;
     let totalOrderAmount = 0;
@@ -108,7 +106,6 @@ const stripePayment = async (req, res) => {
 
         const session = await stripe.checkout.sessions.create(sessionOptions);
         let stripeSessionId = session.id;
-        console.log(stripeSessionId)
         let stripeSessionUrl = session.url;
         let status = 'pending';
         const updatedOrder = {
@@ -159,7 +156,7 @@ const validatePayment = async (req, res) => {
             }
             await dbHandler.confirmPayment(updatedOrder);
             console.log('Payment confirmed');
-            res.status(200).json({ message: "Payment confirmed" });   
+            res.status(200).json({ message: "Payment confirmed" });
             return;
         }
         res.status(400).json({ error: "Payment not succeeded" });
