@@ -122,7 +122,6 @@ const stripePayment = async (req, res) => {
 }
 const validatePayment = async (req, res) => {
     const order_id = req.params.orderId;
-    console.log(order_id)
     const token = req.headers.authorization.split(' ')[1];
     // Decode the JWT token to get the user_id
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);

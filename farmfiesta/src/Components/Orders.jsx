@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../features/Orders/OrdersSlice'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const Orders = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,13 +20,29 @@ const Orders = () => {
         approvedUrl,
         cancelUrl
       }
-      const response = await axios.post(`/orders/stripe-payment/${orderId}`, redirectUrls )
+      const response = await axios.post(`/orders/stripe-payment/${orderId}`, redirectUrls)
       const stripeRequestUrl = response.data.stripeSessionUrl;
       console.log(stripeRequestUrl)
       window.location.href = stripeRequestUrl;
     } catch (error) {
       console.log(error)
     }
+  }
+  const validatePayment = async (orderId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(`/orders/validate-payment/${orderId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      toast.success("Payment Confirmed")
+    } catch (error) {
+      console.log(error)
+      toast.error("Could not confirm payment")
+    }
+
+
   }
   return (
     <div>
@@ -50,6 +67,7 @@ const Orders = () => {
                 <td>{/* Display order items here */}</td>
                 <td>
                   <button className="btn btn-primary" onClick={() => handlePayment(order.order_id)}>Pay</button>
+                  <button className="btn btn-success" onClick={()=>validatePayment(order.order_id)}>Confirm Payment</button>
                   <button className="btn btn-outline-danger mx-2">Cancel</button>
                 </td>
               </tr>
