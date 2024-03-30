@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../features/Orders/OrdersSlice'
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import {saveAs} from 'file-saver'
 const Orders = () => {
 
   const dispatch = useDispatch();
@@ -27,6 +28,16 @@ const Orders = () => {
       console.log(error)
     }
   }
+  const handleInvoice = async (orderId) => {
+    try {
+        const response = await axios.get(`/orders/order-items/${orderId}`, { responseType: 'blob' });
+        const pdfBlob = response.data;
+        saveAs(pdfBlob, 'invoice.pdf');
+    } catch (error) {
+        console.error('Error downloading invoice:', error);
+        // Handle error appropriately (e.g., show error message to the user)
+    }
+};
   const validatePayment = async (orderId) => {
     try {
       const token = localStorage.getItem('token');
@@ -64,11 +75,13 @@ const Orders = () => {
                 <td>{order.order_id}</td>
                 <td>{new Date(order.order_date).toLocaleDateString()}</td>
                 <td>{order.status}</td>
-                <td>{/* Display order items here */}</td>
+                <td>
+                <button className="btn btn-primary" onClick={() => handleInvoice(order.order_id)}>Get Invoice</button>
+                </td>
                 <td>
                   <button className="btn btn-primary" onClick={() => handlePayment(order.order_id)}>Pay</button>
-                  <button className="btn btn-success" onClick={() => validatePayment(order.order_id)}>Confirm Payment</button>
-                  <button className="btn btn-outline-danger mx-2">Cancel</button>
+                  <button className="btn btn-success mx-1" onClick={() => validatePayment(order.order_id)}>Confirm Payment</button>
+                  <button className="btn btn-outline-danger">Cancel</button>
                 </td>
               </tr>
             ))}

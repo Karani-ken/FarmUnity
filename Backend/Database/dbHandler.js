@@ -96,7 +96,19 @@ const selectUsers = async () => {
             console.log('no users in the table')
         }
     } catch (error) {
-        throw error;
+       console.log(error)
+    }
+}
+const selectUserById = async (id) =>{
+    try {
+        const result = await executeQuery(queries.selectUserById, [id])
+        if (result.length > 0) {
+            return result;
+        } else {
+            console.log('user not found!!')
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 //insert a new product to the database
@@ -297,5 +309,6 @@ module.exports = {
     fetchUnpaidOrders,
     fetchOrderById,
     orderWithItems,
-    confirmPayment
+    confirmPayment,
+    selectUserById
 }

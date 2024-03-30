@@ -23,6 +23,7 @@ const insertUsersQuery = 'INSERT INTO users (name, email, password, phone, role)
 const selectUserByEmail = 'SELECT * FROM users WHERE email = ?';
 const selectUserByRole = 'SELECT * FROM users WHERE role = ?';
 const selectAllUsers = 'SELECT * FROM users';
+const selectUserById = `SELECT * FROM users WHERE ID = ?`
 
 // Products queries
 const showProductsTable = 'SHOW TABLES LIKE "Products"';
@@ -167,5 +168,6 @@ module.exports = {
   showOrderItemsTable,
   insertOrderItems,
   fetchOrderWithOrderItems,
-  confirmPayment
+  confirmPayment,
+  selectUserById
 };
