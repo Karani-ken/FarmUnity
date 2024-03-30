@@ -77,7 +77,9 @@ const getAllUserUnpaidOrders = async (req, res) => {
 const stripePayment = async (req, res) => {
     const order_id = req.params.orderId;
     const order = await dbHandler.fetchOrderById(order_id)
-    const user_id = order.user_id;
+    console.log(order)
+    const user_id = order[0].user_id;
+    console.log(user_id)
     let totalOrderAmount = 0;
     const { approvedUrl, cancelUrl } = req.body
     try {
@@ -107,13 +109,15 @@ const stripePayment = async (req, res) => {
         const session = await stripe.checkout.sessions.create(sessionOptions);
         let stripeSessionId = session.id;
         let stripeSessionUrl = session.url;
-        let status = 'pending';
+        console.log(stripeSessionId)
+        let status = 'waiting confirmation';
         const updatedOrder = {
             stripeSessionId,
             status,
             user_id,
             order_id
         }
+        console.log(updatedOrder)
         await dbHandler.updateOrder(updatedOrder);
         res.status(201).json({ stripeSessionUrl })
     } catch (error) {
@@ -126,6 +130,7 @@ const validatePayment = async (req, res) => {
     // Decode the JWT token to get the user_id
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const user_id = decodedToken.userId;
+    console.log(user_id)
 
     try {
         const order = await dbHandler.fetchOrderById(order_id);

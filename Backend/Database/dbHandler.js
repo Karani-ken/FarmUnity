@@ -191,7 +191,7 @@ const updateOrder = async (updatedOrder) => {
     try {
         const {stripeSessionId,status,order_id,user_id} = updatedOrder;
         await executeQuery(queries.updateOrder, [stripeSessionId,status,order_id,user_id]);
-        console.log("Order was successfully updated");
+        console.log("Order payment was successfull");
     } catch (error) {
         console.log(error);
     }
@@ -200,11 +200,11 @@ const confirmPayment = async (updatedOrder) => {
     try {
         const {stripeSessionId,paymentIntentId,status,order_id,user_id} = updatedOrder;
         await executeQuery(queries.confirmPayment, [stripeSessionId,paymentIntentId,status,order_id,user_id]);
-        console.log("Order was successfully updated");
+        console.log("payment was confirmed successfully");
     } catch (error) {
         console.log(error);
     }
-};
+};  
 
 //delete order
 const deleteOrder = async (order_id) => {

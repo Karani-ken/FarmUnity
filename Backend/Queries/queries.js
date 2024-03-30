@@ -77,8 +77,8 @@ const createOrderItemsTable = `CREATE TABLE orderitems (
 
 const createOrder = `INSERT INTO orders (user_id, status) VALUES (?, ?)`; // Only inserting core order details
 const insertOrderItems = `INSERT INTO orderitems (order_id, product_id, product_name, product_image, product_price, quantity) VALUES (?, ?, ?, ?, ?, ?)`; // Inserting order items
-const updateOrder = `UPDATE orders SET stripeSessionId = ?, paymentIntentId = ?, status = ? WHERE order_id = ?`;
-const confirmPayment = `UPDATE orders SET stripeSessionId = ?, paymentIntentId = ?, status = ? WHERE order_id = ?`; // Updating only relevant order details
+const updateOrder = `UPDATE orders SET stripeSessionId = ?, status = ? WHERE order_id = ? AND user_id = ?`;
+const confirmPayment = `UPDATE orders SET stripeSessionId = ?, paymentIntentId = ?, status = ? WHERE order_id = ? AND user_id = ?`; // Updating only relevant order details
 const deleteOrder = `DELETE FROM orders WHERE order_id = ?`;
 const fetchOrder = `SELECT * FROM orders WHERE user_id = ?`;
 const fetchUnpaidUserOrders = `SELECT * FROM orders WHERE user_id = ? AND status = "pending"`;

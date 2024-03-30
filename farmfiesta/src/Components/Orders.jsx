@@ -2,10 +2,9 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../features/Orders/OrdersSlice'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const Orders = () => {
-  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const response = useSelector((state) => state.orders);
   const { orders } = response
@@ -31,12 +30,13 @@ const Orders = () => {
   const validatePayment = async (orderId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`/orders/validate-payment/${orderId}`, {
+      const response = await axios.post(`/orders/validate-payment/${orderId}`, null, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
       toast.success("Payment Confirmed")
+      window.location.reload();
     } catch (error) {
       console.log(error)
       toast.error("Could not confirm payment")
@@ -62,12 +62,12 @@ const Orders = () => {
             {orders?.map((order) => (
               <tr key={order.order_id}>
                 <td>{order.order_id}</td>
-                <td>{new Date(order.order_date).toLocaleString()}</td>
+                <td>{new Date(order.order_date).toLocaleDateString()}</td>
                 <td>{order.status}</td>
                 <td>{/* Display order items here */}</td>
                 <td>
                   <button className="btn btn-primary" onClick={() => handlePayment(order.order_id)}>Pay</button>
-                  <button className="btn btn-success" onClick={()=>validatePayment(order.order_id)}>Confirm Payment</button>
+                  <button className="btn btn-success" onClick={() => validatePayment(order.order_id)}>Confirm Payment</button>
                   <button className="btn btn-outline-danger mx-2">Cancel</button>
                 </td>
               </tr>
