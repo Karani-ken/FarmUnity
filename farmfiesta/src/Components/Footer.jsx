@@ -7,8 +7,8 @@ function Footer() {
         <div className="col-lg-4 text-center">
           <h3>Contacts</h3>
           <ul style={{listStyle:'none'}} className="text-start">
-            <li>Telephone: 0755995669</li>
-            <li>Email: kenneth0karani@gmail.com</li>
+            <li>Telephone: 0712345678</li>
+            <li>Email: farmunity@example.com</li>
           </ul>
         </div>
         <div className="col-lg-4 text-center">
