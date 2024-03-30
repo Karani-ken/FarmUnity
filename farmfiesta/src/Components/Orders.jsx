@@ -26,6 +26,7 @@ const Orders = () => {
       window.location.href = stripeRequestUrl;
     } catch (error) {
       console.log(error)
+      toast.error("Could not pay!!")    
     }
   }
   const handleInvoice = async (orderId) => {

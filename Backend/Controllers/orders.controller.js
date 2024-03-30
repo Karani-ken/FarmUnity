@@ -78,14 +78,18 @@ const getAllUserUnpaidOrders = async (req, res) => {
 
 //TODO: stripe payment
 const stripePayment = async (req, res) => {
-    const order_id = req.params.orderId;
-    const order = await dbHandler.fetchOrderById(order_id)
-    console.log(order)
-    const user_id = order[0].user_id;
-    console.log(user_id)
-    let totalOrderAmount = 0;
-    const { approvedUrl, cancelUrl } = req.body
+
     try {
+        const order_id = req.params.orderId;
+        const order = await dbHandler.fetchOrderById(order_id)
+      
+        if (order[0].status === "Approved") {
+            return res.status(500).json("Order is already paid for")
+        }
+        const user_id = order[0].user_id;
+
+        let totalOrderAmount = 0;
+        const { approvedUrl, cancelUrl } = req.body
         const results = await dbHandler.orderWithItems(order_id);
         for (const orderItem of results) {
             totalOrderAmount += orderItem.product_price * orderItem.quantity;
@@ -112,7 +116,7 @@ const stripePayment = async (req, res) => {
         const session = await stripe.checkout.sessions.create(sessionOptions);
         let stripeSessionId = session.id;
         let stripeSessionUrl = session.url;
-        console.log(stripeSessionId)
+
         let status = 'waiting confirmation';
         const updatedOrder = {
             stripeSessionId,
@@ -120,7 +124,7 @@ const stripePayment = async (req, res) => {
             user_id,
             order_id
         }
-        console.log(updatedOrder)
+
         await dbHandler.updateOrder(updatedOrder);
         res.status(201).json({ stripeSessionUrl })
     } catch (error) {
@@ -177,7 +181,7 @@ const orderItems = async (req, res) => {
     const order_id = req.params.orderId
     const results = await dbHandler.orderWithItems(order_id);
     const user_id = results[0].user_id
-    const user = await dbHandler.selectUserById(user_id);    
+    const user = await dbHandler.selectUserById(user_id);
     const username = user[0].name;
     try {
         const orderProductDetails = results.map(orderItem => ({
@@ -197,7 +201,7 @@ const orderItems = async (req, res) => {
             totalAmount,
             username
         };
-       
+
         const pdfOptions = {
             format: 'A4',
             orientation: 'portrait',
