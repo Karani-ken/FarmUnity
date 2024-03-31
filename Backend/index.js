@@ -25,10 +25,10 @@ dbHandler.pool.getConnection((err, connection)=>{
         throw err;    
     })
 })   
-app.use('/api/auth', authRoutes)
-app.use('/api/products', productRoutes)
-app.use('/api/posts',postsRoutes)
-app.use('/api/orders', orderRoutes)    
+app.use('/auth', authRoutes)
+app.use('/products', productRoutes)
+app.use('/posts',postsRoutes)
+app.use('/orders', orderRoutes)    
 app.listen(port,()=>{
     console.log(`App started on http://localhost:${port}`);       
 })

@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const dbHandler = require('../Database/dbHandler')
 const { uploadToCloudinary } = require('../Services/cloudinary');
 const jwt = require("jsonwebtoken")
