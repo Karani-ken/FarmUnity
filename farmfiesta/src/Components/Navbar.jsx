@@ -31,7 +31,7 @@ const Navbar = () => {
                 <li><Link to='/shop'>Shop</Link></li>
               </ul>
             </li>
-            <li>Interactions</li>
+            <li><Link to='/interactions'>Interactions</Link></li>
 
             {isLoggedIn ? (
               <>

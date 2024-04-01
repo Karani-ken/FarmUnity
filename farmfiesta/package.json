@@ -2,7 +2,7 @@
   "name": "farmfiesta",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://fusionafricatech.co.ke/api",
+  "proxy": "http://localhost:4000/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -44,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
   }
 }

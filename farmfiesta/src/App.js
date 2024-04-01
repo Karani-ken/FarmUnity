@@ -9,28 +9,30 @@ import Register from "./MainComponents/Register";
 import Cart from "./MainComponents/Cart";
 import ProductPage from "./Components/ProductPage";
 import AddProduct from "./Components/AddProduct";
-import Feed from "./Components/Feed";
 import ApplicationForm from "./MainComponents/ApplicationForm";
 import Dashboard from "./MainComponents/Dashboard";
 import Orders from "./Components/Orders";
+import Interactions from "./Components/Interactions";
+
 function App() {
+  
   return (
     <div className="App">
       <Router>
         <Navbar />
         <ToastContainer />
         <Routes>
-          <Route  path="/" element={<HomePage />} />
-          <Route  path="/shop" element={<Shop />} />
-          <Route  path="/login" element={<Login />} />
-          <Route  path="/register" element={<Register />} />
-          <Route  path="/seller-registration" element={<ApplicationForm />} />
-          <Route path="/cart" element={<Cart/>}/>
-          <Route path="/product/:id" element={<ProductPage/>}/>   
-          <Route path="/add-product" element={<AddProduct/>} />
-          <Route path="/dashboard" element={<Dashboard />} />         
-          <Route path="/feed" element={<Feed/>} />
-          <Route path="/orders" element={<Orders/>} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/seller-registration" element={<ApplicationForm />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/interactions" element={<Interactions />} />
         </Routes>
       </Router>
     </div>
