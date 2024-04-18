@@ -96,12 +96,13 @@ const selectUsers = async () => {
             console.log('no users in the table')
         }
     } catch (error) {
-       console.log(error)
+        console.log(error)
     }
 }
-const selectUserById = async (id) =>{
+const selectUserById = async (ID) => {
     try {
-        const result = await executeQuery(queries.selectUserById, [id])
+        const result = await executeQuery(queries.selectUserById, [ID])
+        
         if (result.length > 0) {
             return result;
         } else {
@@ -110,6 +111,18 @@ const selectUserById = async (id) =>{
     } catch (error) {
         console.log(error)
     }
+}
+
+//Update user 
+const updateUser = async (ID, updatedUserData) => {
+    try {
+        const { name, email, phone, profilePic, county, address } = updatedUserData;
+        await executeQuery(queries.updateUsers, [name, email,phone,  county,profilePic, address, ID])
+        return "profile was updated"
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 //insert a new product to the database
 const insertProduct = async (productData) => {
@@ -201,8 +214,8 @@ const createOrder = async (orderData, orderItemsData) => {
 //update order
 const updateOrder = async (updatedOrder) => {
     try {
-        const {stripeSessionId,status,order_id,user_id} = updatedOrder;
-        await executeQuery(queries.updateOrder, [stripeSessionId,status,order_id,user_id]);
+        const { stripeSessionId, status, order_id, user_id } = updatedOrder;
+        await executeQuery(queries.updateOrder, [stripeSessionId, status, order_id, user_id]);
         console.log("Order payment was successfull");
     } catch (error) {
         console.log(error);
@@ -210,13 +223,13 @@ const updateOrder = async (updatedOrder) => {
 };
 const confirmPayment = async (updatedOrder) => {
     try {
-        const {stripeSessionId,paymentIntentId,status,order_id,user_id} = updatedOrder;
-        await executeQuery(queries.confirmPayment, [stripeSessionId,paymentIntentId,status,order_id,user_id]);
+        const { stripeSessionId, paymentIntentId, status, order_id, user_id } = updatedOrder;
+        await executeQuery(queries.confirmPayment, [stripeSessionId, paymentIntentId, status, order_id, user_id]);
         console.log("payment was confirmed successfully");
     } catch (error) {
         console.log(error);
     }
-};  
+};
 
 //delete order
 const deleteOrder = async (order_id) => {
@@ -257,7 +270,7 @@ const fetchOrderById = async (order_id) => {
 }
 const orderWithItems = async (order_id) => {
     try {
-        const result = await executeQuery(queries.fetchOrderWithOrderItems , [order_id])
+        const result = await executeQuery(queries.fetchOrderWithOrderItems, [order_id])
         console.log(result)
         return result;
     } catch (error) {
@@ -310,5 +323,6 @@ module.exports = {
     fetchOrderById,
     orderWithItems,
     confirmPayment,
-    selectUserById
+    selectUserById,
+    updateUser
 }

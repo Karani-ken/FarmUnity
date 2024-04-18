@@ -9,23 +9,13 @@ const WeatherApp = () => {
   const {weather,location,values,place} = useStateContext()
 
   return (
-    <div className='w-full h-screenn text-white px-8'>
+    <div className='w-full h-screen text-black px-8'>
        <nav className='w-full p-3 flex justify-between items-center'>
           <h1 className='font-bold tracking-wide text-3xl'>Weather Updates</h1>
-          <div className='bg-white w-[15rem] overflow-hidden shadow-2xl rounded flex items-center p-2 gap-2'>
-            <img src={search} alt="search" className='w-[1.5rem] h-[1.5rem]' />
-            <input type='text' 
-            onKeyUp={(e) =>{
-              if(e.key === 'Enter'){
-                //submit the form
-              }
-            }}
-            className='focus:outline-none w-full text-[#212121] text-lg'value={input} onChange={e => setInput(e.target.value)}/>
-
-          </div>
+          
        </nav>
        <BackgroundLayout></BackgroundLayout>
-       <main className='w-full flex flex-wrap gap-8 py-4 justify-center'>
+       <main className='w-full flex flex-wrap gap-4 py-2 justify-center'>
               <WeatherCard
                 place={place}
                 windspeed={weather?.wspd}
@@ -35,7 +25,7 @@ const WeatherApp = () => {
                 iconString={weather?.conditions}
                 conditions={weather?.conditions}
               />
-              <div className='flex justify-center gap-0 flex-wrap w-[60%]'>
+              <div className='flex justify-center gap-4 flex-wrap w-[60%]'>
                     {
                       values?.slice(1, 7).map(curr =>{
                        return( 

@@ -44,7 +44,7 @@ const register = async (req, res) => {
        
     } catch (error) {
        console.log(error)
-       res.status(500).json('internal server error')
+       return res.status(500).json('internal server error')
         
     }
 }   
@@ -64,34 +64,81 @@ const login = async (req, res,next) => {
             userId: user[0].ID,
             role: user[0].role,
             name: user[0].name,
-            email: user[0].email
+            email: user[0].email,            
         },
             process.env.JWT_SECRET, {
             expiresIn: "24h",
         })
-        res.status(200).json({ token });
+        return res.status(200).json({ token });
         sendEmail(email, "Login update", "There was new login to your account")
     } catch (error) {
-       throw error;
-       next();
+       console.log(error)
+       return res.status(500).json(error)
     }
 }
 const selectUsers = async (req, res) => {
     try {
         const result = await dbHandler.selectUsers();
         if (result.length > 0) {
-            res.status(200).json({ result });
+           return res.status(200).json(result);
         } else {
-            res.status(200).json({ message: "no users found" })  
+           return res.status(200).json({ message: "no users found" })  
         }
     } catch (error) {
-        throw error;
-        next();
+        return res.status(500).json(error)
     }
 }
 
+
+//update user profile
+const updateUser = async (req, res) =>{
+    try {
+        const {id} = req.params
+        const profilePic = req.file?.path
+        let imageUrl;
+        //check if user account exists
+        const user = await dbHandler.selectUserById(id);
+        if(user.length === 0){
+            return res.status(400).json("account does not exists")
+        }
+        if (!profilePic) {  
+            imageUrl = null;
+        } else {
+            // If idPhoto is provided, upload it to Cloudinary
+            const data = await uploadToCloudinary(profilePic, "test-one");
+             imageUrl = data.url; // Assign the uploaded image URL to idPhoto
+        }
+        
+        const updatedUserInfo = {
+            name:req.body.name ? req.body.name : user[0].name,
+            email:req.body.email? req.body.email : user[0].email,
+            phone:req.body.phone ? req.body.phone : user[0].phone,
+            county:req.body.county? req.body.county : user[0].county,
+            address:req.body.address ? req.body.address : user[0].address,
+            profilePic:  profilePic? imageUrl : user[0].profilePic         
+        }
+        const response = await dbHandler.updateUser(id,updatedUserInfo)
+        console.log(response)
+        return res.status(200).json(response)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
+
+const getUserById = async (req, res) =>{
+    try {
+        const {id} = req.params
+        const result = await dbHandler.selectUserById(id)
+      
+        return res.status(200).json(result[0])
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
 module.exports = {
     register,
     login,
-    selectUsers
+    selectUsers,
+    updateUser,
+    getUserById
 }

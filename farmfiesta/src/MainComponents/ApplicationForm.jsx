@@ -8,9 +8,7 @@ const ApplicationForm = () => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
-    phone: '',
-    idNumber: '',
-    idPhoto: '',
+    phone: '',    
     password: '',
     role: 'farmer'
   })
@@ -44,17 +42,14 @@ const ApplicationForm = () => {
       // Append form data to FormData object
       formData.append('name', userData.name);
       formData.append('email', userData.email);
-      formData.append('phone', userData.phone);
-      formData.append('idNumber', userData.idNumber);
-      formData.append('idPhoto', userData.idPhoto);
-      formData.append('password', userData.password);
-      formData.append('county', userData.county);
+      formData.append('phone', userData.phone);     
+      formData.append('password', userData.password);     
       formData.append('role', userData.role)
 
       // Send form data to the server using Axios
       const response = await axios.post('/auth/register', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data' // Set content type for FormData
+          'Content-Type': 'application/json' // Set content type for FormData
         }
       });
 
@@ -64,11 +59,8 @@ const ApplicationForm = () => {
       setUserData({
         name: '',
         email: '',
-        phone: '',
-        idNumber: '',
-        idPhoto: '',
-        password: '',
-        county: '',
+        phone: '',       
+        password: '',       
         role: 'farmer'
       });
       
@@ -124,27 +116,8 @@ const ApplicationForm = () => {
             placeholder="Enter your phone number"
             onChange={handleChange}
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="Id" className="fw-bold">ID number</label>
-          <input
-            type="number"
-            className="form-control p-2"
-            name="idNumber"
-            value={userData.idNumber}
-            placeholder="Enter your Id number"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="idPhoto" className="fw-bold">ID Photo</label>
-          <input
-            type="file"
-            className="form-control p-2"
-            name="idPhoto"
-            onChange={handleChange}
-          />
-        </div>
+        </div>  
+     
         <div className="form-group">
           <label htmlFor="Name" className="fw-bold">County</label>
           <select name="county" className='form-control'>

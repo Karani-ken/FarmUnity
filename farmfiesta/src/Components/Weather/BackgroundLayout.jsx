@@ -27,11 +27,13 @@ const BackgroundLayout = () => {
                 setImage(Fog)
             }else if(imageString.toLowerCase().includes('thunder') || imageString.toLowerCase().includes('storm')){
                 setImage(Stormy)
+            }else{
+                setImage(Sunny)
             }
         }
    },[weather])
   return (
-   <img src={image} alt="Weather_image" className="h-[90vh] w-full fixed left-0 top-10 mt-[92px]  -z-[10]"/>
+   <img src={image} alt="Weather_image" className="h-[100vh] w-full absolute left-0 top-10 mt-[92px]  -z-[10]"/>
   )
 }
 
