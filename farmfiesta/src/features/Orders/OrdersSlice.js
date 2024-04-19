@@ -67,7 +67,7 @@ export const createOrder = (orderItemsData) => async (dispatch) => {
     console.log(orderItemsData)
     try {
         const token = localStorage.getItem('token'); // Get the token from local storage or wherever it's stored
-        const response = await axios.post("/orders/create-order", { orderItemsData }, {
+        const response = await axios.post("https://api.fusionafricatech.co.ke/orders/create-order", { orderItemsData }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -85,7 +85,7 @@ export const fetchOrders = () => async (dispatch) => {
     dispatch(fetchOrdersRequest());
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get("/orders/fetch-all-orders", {
+        const response = await axios.get("https://api.fusionafricatech.co.ke/orders/fetch-all-orders", {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

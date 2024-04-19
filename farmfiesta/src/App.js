@@ -13,6 +13,8 @@ import ApplicationForm from "./MainComponents/ApplicationForm";
 import Dashboard from "./MainComponents/Dashboard";
 import Orders from "./Components/Orders";
 import Interactions from "./Components/Interactions";
+import PaymentSuccessPage from "./Components/PaymentSuccessPage";
+import PaymentFailedPage from "./Components/PaymentFailedPage";
 
 function App() {
   
@@ -32,6 +34,8 @@ function App() {
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path="/payment-success" element={<PaymentSuccessPage/>} />
+          <Route path="/payment-failed" element={<PaymentFailedPage/>} />
           <Route path="/interactions" element={<Interactions />} />
         </Routes>
       </Router>

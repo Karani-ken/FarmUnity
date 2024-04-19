@@ -40,6 +40,7 @@ const Navbar = () => {
 
                 </li>
                 <li><Link to='/dashboard' style={{ textDecoration: 'none', color: 'black' }}>Dashboard</Link></li>
+                <li><Link to='/orders' style={{ textDecoration: 'none', color: 'black' }}>Orders</Link></li>
               </>
 
 

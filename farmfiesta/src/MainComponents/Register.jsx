@@ -18,7 +18,7 @@ function Register() {
   const handleSubmit = async (e)=>{
     e.preventDefault();
     try {
-      const response = await axios.post('/auth/register', userData);
+      const response = await axios.post('https://api.fusionafricatech.co.ke/auth/register', userData);
       console.log("registration successfull",response.data);
       toast.success("Registration successful")
       setUserData({

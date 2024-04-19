@@ -13,7 +13,7 @@ const Dashboard = () => {
       // Get user profile
       const fetchUser = async () => {
         try {
-          const response = await axios.get(`/auth/profile/${decoded.userId}`);
+          const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/profile/${decoded.userId}`);
           
           setUserData(response.data);
           console.log(userData)

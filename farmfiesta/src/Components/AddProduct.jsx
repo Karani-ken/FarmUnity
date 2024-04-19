@@ -41,7 +41,7 @@ const AddProduct = () => {
         try {
             // Send form data to the server using Axios
             const token = localStorage.getItem('token');
-            const response = await axios.post('/products/addproduct', formData, {
+            const response = await axios.post('https://api.fusionafricatech.co.ke/products/addproduct', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data', // Set content type for FormData
                     'Authorization': `Bearer ${token}`

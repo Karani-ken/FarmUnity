@@ -14,7 +14,7 @@ function Shop() {
     dispatch(fetchProducts())
   }, [dispatch])
   const handleProductSelect = (product) => {
-    navigate(`/product/${product.product_id}`)
+    navigate(`https://api.fusionafricatech.co.ke/product/${product.product_id}`)
   }
   return (
     <div className="text-center" style={{ margin: "0 10%" }}>

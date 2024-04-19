@@ -14,13 +14,13 @@ const Orders = () => {
   }, [dispatch]);
   const handlePayment = async (orderId) => {
     try {
-      const approvedUrl = "https://www.facebook.com"
-      const cancelUrl = "https://www.youtube.com"
+      const approvedUrl = "https://nnp-farmunity.fusionafricatech.co.ke/payment-success"
+      const cancelUrl = "https://nnp-farmunity.fusionafricatech.co.ke/payment-failed"
       const redirectUrls = {
         approvedUrl,
         cancelUrl
       }
-      const response = await axios.post(`/orders/stripe-payment/${orderId}`, redirectUrls)
+      const response = await axios.post(`https://api.fusionafricatech.co.ke/orders/stripe-payment/${orderId}`, redirectUrls)
       const stripeRequestUrl = response.data.stripeSessionUrl;
       console.log(stripeRequestUrl)
       window.location.href = stripeRequestUrl;
@@ -31,7 +31,7 @@ const Orders = () => {
   }
   const handleInvoice = async (orderId) => {
     try {
-        const response = await axios.get(`/orders/order-items/${orderId}`, { responseType: 'blob' });
+        const response = await axios.get(`https://api.fusionafricatech.co.ke/orders/order-items/${orderId}`, { responseType: 'blob' });
         const pdfBlob = response.data;
         saveAs(pdfBlob, 'invoice.pdf');
     } catch (error) {
@@ -42,7 +42,7 @@ const Orders = () => {
   const validatePayment = async (orderId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`/orders/validate-payment/${orderId}`, null, {
+      const response = await axios.post(`https://api.fusionafricatech.co.ke/orders/validate-payment/${orderId}`, null, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

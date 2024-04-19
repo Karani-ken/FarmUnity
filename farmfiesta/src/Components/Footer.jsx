@@ -8,7 +8,7 @@ function Footer() {
           <h3>Contacts</h3>
           <ul style={{listStyle:'none'}} className="text-start">
             <li>Telephone: 0712345678</li>
-            <li>Email: info@fusionafricatech.co.ke</li>
+            <li>Email: info@nnp-farmunity.fusionafricatech.co.ke</li>
           </ul>
         </div>
         <div className="col-lg-4 text-center">
@@ -25,7 +25,7 @@ function Footer() {
             <li>Facebook:</li>
             <li>Twitter</li>
             <li>LinkedIn</li>
-            <li>Instagram: fusions_africatech</li>
+            <li>Instagram</li>
           </ul>
         </div>
       </div>

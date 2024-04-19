@@ -60,9 +60,9 @@ const updateProduct = `UPDATE Products
   user_id = ?`;
 const getProducts = `SELECT * FROM Products ORDER BY product_id ASC`;
 const deleteProduct = `DELETE FROM Products WHERE product_id = ? AND user_id = ?`;
-const getProductByID = `SELECT * FROM products WHERE product_id = ? AND user_id = ?`;
-const getProductCount = `SELECT COUNT(*) FROM products`;
-const getProductCategories = `SELECT DISTINCT product_name FROM products WHERE user_id = ?`;
+const getProductByID = `SELECT * FROM Products WHERE product_id = ? AND user_id = ?`;
+const getProductCount = `SELECT COUNT(*) FROM Products`;
+const getProductCategories = `SELECT DISTINCT product_name FROM Products WHERE user_id = ?`;
 
 // Orders
 // Orders
