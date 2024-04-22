@@ -1,28 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+
 const AddProduct = () => {
-    const [productData, setProductData] = useState({
+    const initialState = {
         product_name: '',
         product_description: '',
         product_price: '',
-        product_image: '',
-    });
+        product_image: null,
+    };
+
+    const [productData, setProductData] = useState(initialState);
 
     const handleInputChange = (e) => {
         const { name, value, type } = e.target;
 
         if (type === 'file') {
-            // For file inputs (e.g., ID photo), get the selected file
             const file = e.target.files[0];
-
-            // Update state with the selected file
             setProductData((prevState) => ({
                 ...prevState,
-                [name]: file // Store the file object directly in state
+                [name]: file
             }));
         } else {
-            // For other input types, update state with the input value
             setProductData((prevState) => ({
                 ...prevState,
                 [name]: value
@@ -38,20 +37,23 @@ const AddProduct = () => {
         formData.append('product_description', productData.product_description);
         formData.append('product_price', productData.product_price);
         formData.append('product_image', productData.product_image);
+
         try {
-            // Send form data to the server using Axios
             const token = localStorage.getItem('token');
             const response = await axios.post('https://api.fusionafricatech.co.ke/products/addproduct', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data', // Set content type for FormData
+                    'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
             });
             console.log("Product was added successfully", response.data);
-            toast.success("Product was added")
+            toast.success("Product was added");
+
+            // Reset form fields to initial state after successful submission
+            setProductData(initialState);
         } catch (error) {    
             console.error("Error adding product", error);
-            toast.error("something went wrong")
+            toast.error("Something went wrong");
         }
     };
 
@@ -94,7 +96,7 @@ const AddProduct = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="image" className="fw-bold">product image</label>
+                        <label htmlFor="image" className="fw-bold">Product image</label>
                         <input
                             type="file"
                             name="product_image"

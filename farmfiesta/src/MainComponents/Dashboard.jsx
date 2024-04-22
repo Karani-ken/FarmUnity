@@ -44,6 +44,7 @@ const Dashboard = () => {
             <h1 className='text-center font-bold text-4xl'>3</h1>
           </div>
           <div className="btn btn-primary h-25 text-center">Edit profile</div>
+          <div className="btn btn-secondary h-25 text-center" onClick={handleAddProduct}>Add new Product</div>
         </div>
             <h3 className="text-3xl">Products</h3>
         <div className="overflow-x-auto">
