@@ -102,7 +102,7 @@ const stripePayment = async (req, res) => {
                     name: 'Farm Unity Payment',
                     description: description
                 },
-                unit_amount: totalOrderAmount * 1000
+                unit_amount: totalOrderAmount * 100
             },
             quantity: 1
         }];
@@ -125,7 +125,7 @@ const stripePayment = async (req, res) => {
             order_id
         }
 
-        await dbHandler.updateOrder(updatedOrder);
+        await dbHandler.updateOrder(updatedOrder);        
         res.status(201).json({ stripeSessionUrl })
     } catch (error) {
         res.status(500).json(error)

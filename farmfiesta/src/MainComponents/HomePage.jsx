@@ -8,11 +8,10 @@ import Footer from '../Components/Footer'
 function HomePage() {
   return (
     <div>
-        <LandingPage/>
-        <ProductsSection/>
-        <Services/>
-        <AboutUs/>
-        <Footer/>
+      <LandingPage />
+      <ProductsSection />
+      <Services />
+      <AboutUs />
     </div>
   )
 }

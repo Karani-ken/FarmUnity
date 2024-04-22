@@ -9,7 +9,7 @@ const WeatherApp = () => {
   const {weather,location,values,place} = useStateContext()
 
   return (
-    <div className='w-full h-screen text-black px-8'>
+    <div className='w-full h-screen text-black px-8 overflow-y-scroll'>
        <nav className='w-full p-3 flex justify-between items-center'>
           <h1 className='font-bold tracking-wide text-3xl'>Weather Updates</h1>
           

@@ -190,6 +190,26 @@ const getProductCount = async () => {
     }
 }
 
+//update product quantity on purchase
+const updateProductStatus = async (product_status,product_id) =>{
+    try {
+        await executeQuery(queries.updateProductQuantity,[product_status,product_id])
+        
+    } catch (error) {
+        console.error(error)
+    }
+    
+}
+//SELECT USER PRODUCTS
+const getuserProducts = async (user_id)=>{
+    try {
+        const result = await executeQuery(queries.getUserProducts,[user_id])
+        return result;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //CART handling
 //Create order
 const createOrder = async (orderData, orderItemsData) => {
@@ -324,5 +344,7 @@ module.exports = {
     orderWithItems,
     confirmPayment,
     selectUserById,
-    updateUser
+    updateUser,
+    updateProductStatus,
+    getuserProducts
 }

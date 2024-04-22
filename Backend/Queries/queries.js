@@ -47,9 +47,10 @@ const createProductsTable = `CREATE TABLE Products (
     product_image VARCHAR(255),
     product_price DECIMAL(10, 2),   
     user_id INT NOT NULL,
+    product_status VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES users(ID) ON DELETE CASCADE
 )`;
-const insertProducts = `INSERT INTO Products (product_name, product_description, product_price, product_image, user_id) VALUES (?, ?, ?, ?, ?)`;
+const insertProducts = `INSERT INTO Products (product_name, product_description, product_price, product_image, product_status, user_id) VALUES (?, ?, ?, ?, ?,?)`;
 const updateProduct = `UPDATE Products
   SET product_name = ?,
       product_description = ?,
@@ -58,6 +59,10 @@ const updateProduct = `UPDATE Products
       product_price = ?
   WHERE product_id = ? AND
   user_id = ?`;
+const updateProductStatus = `
+  UPDATE Products SET product_status = ? WHERE product_id = ?`
+const getUserProducts = `SELECT DISTINCT product_name FROM Products WHERE user_id = ?
+`
 const getProducts = `SELECT * FROM Products ORDER BY product_id ASC`;
 const deleteProduct = `DELETE FROM Products WHERE product_id = ? AND user_id = ?`;
 const getProductByID = `SELECT * FROM Products WHERE product_id = ? AND user_id = ?`;
@@ -183,5 +188,7 @@ module.exports = {
   confirmPayment,
   selectUserById,
   updateUsers,
-  deleteUser
+  deleteUser,
+  updateProductStatus,
+  getUserProducts
 };

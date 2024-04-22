@@ -105,16 +105,39 @@ const deleteProduct = async (req, res) => {
         //delete the product from the database if it exists
         await dbHandler.deleteProduct(product_id);
 
-        res.status(200).json({ message: 'Deleted Successfully' })
+       return res.status(200).json({ message: 'Deleted Successfully' })
     } catch (error) {
         console.error("Error in deleting product:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+       return res.status(500).json({error });
     }
 }
+const updateProductStatus = async ( req, res) =>{
+    try {
+        const status = req.body;
+        const {id} = req.params
 
+        await dbHandler.updateProductStatus(status, id)
+        return res.status(200).json({ message: 'status updated Successfully' })
+    } catch (error) {
+        console.error("Error in updating status:", error);
+       return res.status(500).json({ error });
+    }
+}
+const getUserProducts = async (req, res)=>{
+    try {
+        const {id} = req.params;
+        const products = await dbHandler.getuserProducts(id)
+        return res.status(200).json(products)
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json(error)
+    }
+}
 module.exports = {
     addProduct,
     updateProduct,
     getProducts,
-    deleteProduct
+    deleteProduct,
+    updateProductStatus,
+    getUserProducts
 }

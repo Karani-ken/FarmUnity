@@ -36,12 +36,7 @@ const Profiles = () => {
                                 <h1> <b>Name</b>: {user.name}</h1>
                                 <p><b>{user.role}</b></p>
                                 <p><b>Location:</b> Nyeri</p>
-                                <p><b>Phone: </b>+254{user?.phone}</p>
-                                <h3 className='fw-bold'>Products</h3>
-                                <ul>
-                                    <li>- Potatoes</li>
-                                    <li>- Cabbages</li>
-                                </ul>
+                                <p><b>Phone: </b>+254{user?.phone}</p>                              
                             </div>
                         </div>
                     )

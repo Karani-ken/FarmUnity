@@ -9,17 +9,16 @@ const Dashboard = () => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
     if (token) {
-      const decoded = jwtDecode(token);      
+      const decoded = jwtDecode(token);
       // Get user profile
       const fetchUser = async () => {
         try {
           const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/profile/${decoded.userId}`);
-          
+
           setUserData(response.data);
           console.log(userData)
         } catch (error) {
-          console.error('Error fetching user profile:', error);
-          // Handle error if needed
+          console.error('Error fetching user profile:', error);          // Handle error if needed
         }
       };
       fetchUser();
@@ -30,80 +29,56 @@ const Dashboard = () => {
     navigate('/add-product')
   }
   return (
-    <div className='dashboard'>
-      <h1 className='fw-bold text-2xl p-4'>Welcome {userData && userData.name}</h1>
-      <div className="profile-details">
-        <div className="details-container">
-          <div className='small-container'>
-            <h4 className='fw-semibold p-2 text-xl'>Personal Details</h4>
-            <div className="form-control">
-              <label>Name</label>
-              <p>{userData && userData.name}</p>
-            </div>
-            <div className="form-control">
-              <label>Email</label>
-              <p>{userData && userData.email}</p>
-            </div>
-            <div className="form-control">
-              <label>Phone</label>
-              <p>+254{userData && userData.phone}</p>
-            </div>           
+    <div>
+      <div className="shadow-lg text-center p-2 m-2 rounded-lg">
+        <h1 className="text-3xl font-bold">My Dashboard</h1>
+        <div className="d-lg-flex justify-center my-4">
+          <div className="shadow-lg text-left p-3 bg-emerald-600 m-2 text-white rounded-lg">
+            <p className='font-semibold text-center'>Personal Details</p>
+            <h3 className="font-semibold text-xl">Name: John Doe</h3>
+            <p>phone: +254712345678</p>
+            <p>County: Nyeri</p>
           </div>
-          <div className="small-container">
-            <h4 className='fw-semibold p-2 text-xl'> Address</h4>
-            <div className="form-control">
-              <label>County</label>
-              <p>{userData && userData?.county}</p>
-            </div>
-            <div className="form-control">
-              <label>Town</label>
-              <p>{userData && userData.address}</p>
-            </div>           
+          <div className="shadow-lg text-left p-3 bg-rose-500 m-2 text-white rounded-lg">
+            <h3 className="font-semibold  text-center">My Products Count</h3>
+            <h1 className='text-center font-bold text-4xl'>3</h1>
           </div>
+          <div className="btn btn-primary h-25 text-center">Edit profile</div>
         </div>
-        <button className='btn btn-primary mt-2'>Edit</button>
+            <h3 className="text-3xl">Products</h3>
+        <div className="overflow-x-auto">
+          <table className="table-auto min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Product Category
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Edit Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              <tr className='bg-white'>
+                <td className="px-6 py-3 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">Cabbages</div>
+                </td>
+                <td className="px-6 py-3 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">Available</div>
+                </td>
+                <td className="px-6 py-3 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">Edit</div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
       </div>
-      {userData && userData.role === 'farmer' && (
-        <div className="profile-details">
-          <h3>Products</h3>
-          <div className="details-container">
-            <div className="small-container">
-              <h4>My products</h4>
-              <div className="form-control">
-                <ul>
-                  <li>Potatoes</li>
-                  <li>Cabbages</li>
-                  <li>Carrots</li>
-                </ul>
-                <button className='btn btn-success' onClick={handleAddProduct}>Add Product</button>
-              </div>
-            </div>
-            <div className="small-container">
-              <h4>Manage products</h4>
-              <div className="form-control">
-                <label>Potatoes</label>
-                <div className="product-card">
-                  <ul>
-                    <li>Quatity: 30sacks</li>
-                    <li>Price: 3000 kes per sack</li>
-                  </ul>
-                  <button className='btn btn-primary'>Manage</button>
-                </div>
-              </div>
-              <div className="form-control">
-                <label>Cabbages</label>
-                <div className="product-card">
-                  <ul>
-                    <li>Quatity: 900 pieces</li>
-                    <li>Price: 30 kes per piece</li>
-                  </ul>
-                  <button className='btn btn-primary'>Manage</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
 
     </div>
