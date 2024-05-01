@@ -28,7 +28,8 @@ const Blogs = () => {
             <h1 className="font-bold text-3xl text-center m-2 p-2">Blogs</h1>
             <button className="btn btn-primary" onClick={handleCreatePost}>Create a Post</button>
             <div className="d-lg-flex justify-around gap-5">
-                {blogs && blogs.map(blog => {
+                {users && blogs.map(blog => {
+                     const user = users.find(user => user.ID === blog.user_id);
                     return (
                         <div className="max-w-sm rounded  shadow-lg" style={{height:'250px'}} key={blog.post_id}>
                             <div className="px-6 py-4">
@@ -37,11 +38,7 @@ const Blogs = () => {
                             </div>
                             <div className="px-6 py-2">
                                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                                {users && users.map(user =>{
-                                    if(user.ID === blog.user_id){
-                                        return user.name
-                                    }
-                                })}
+                                {user ? user.name : 'Unknown User'}
                                 </span>
                                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
                                 {new Date(blog.created_at).toLocaleDateString()}
