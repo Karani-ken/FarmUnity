@@ -102,7 +102,7 @@ const selectUsers = async () => {
 const selectUserById = async (ID) => {
     try {
         const result = await executeQuery(queries.selectUserById, [ID])
-        
+
         if (result.length > 0) {
             return result;
         } else {
@@ -117,7 +117,7 @@ const selectUserById = async (ID) => {
 const updateUser = async (ID, updatedUserData) => {
     try {
         const { name, email, phone, profilePic, county, address } = updatedUserData;
-        await executeQuery(queries.updateUsers, [name, email,phone,  county,profilePic, address, ID])
+        await executeQuery(queries.updateUsers, [name, email, phone, county, profilePic, address, ID])
         return "profile was updated"
     } catch (error) {
         console.log(error)
@@ -191,19 +191,19 @@ const getProductCount = async () => {
 }
 
 //update product quantity on purchase
-const updateProductStatus = async (product_status,product_id) =>{
+const updateProductStatus = async (product_status, product_id) => {
     try {
-        await executeQuery(queries.updateProductStatus,[product_status,product_id])
-        
+        await executeQuery(queries.updateProductStatus, [product_status, product_id])
+
     } catch (error) {
         console.error(error)
     }
-    
+
 }
 //SELECT USER PRODUCTS
-const getuserProducts = async (user_id)=>{
+const getuserProducts = async (user_id) => {
     try {
-        const result = await executeQuery(queries.getUserProducts,[user_id])
+        const result = await executeQuery(queries.getUserProducts, [user_id])
         return result;
     } catch (error) {
         console.log(error)
@@ -301,14 +301,23 @@ const orderWithItems = async (order_id) => {
 //Posts
 //insert a post
 const insertPost = async (postData) => {
-    const { title, content, image, user_id } = postData;
+    const { title, content, user_id } = postData;
     try {
-        await executeQuery(queries.createPost, [title, content, image, user_id])
+        await executeQuery(queries.createPost, [title, content, user_id])
         console.log("post was created successfully");
 
     } catch (error) {
-        throw error;
+        console.log(error)
     }
+}
+const getAllPosts = async () => {
+    try {
+        const response = await executeQuery(queries.getPosts);
+        return response;
+    } catch (error) {
+        console.log(error)
+    }   
+
 }
 //initialize database
 const initializeDatabase = async () => {
@@ -346,5 +355,6 @@ module.exports = {
     selectUserById,
     updateUser,
     updateProductStatus,
-    getuserProducts
+    getuserProducts,
+    getAllPosts
 }

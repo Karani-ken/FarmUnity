@@ -1,8 +1,7 @@
 const express = require('express')
-const {createPost} = require('../Controllers/post.controller')
+const {createPost,getAllPosts} = require('../Controllers/post.controller')
 const router = express.Router();
-const upload = require('../Middlewares/uploads.middleware');
-const {protect} = require('../Middlewares/auth.middleware')
-router.post('/create-post',protect,upload.single("image"),createPost);
+router.post('/create-post',createPost);
+router.get('/all-posts',getAllPosts);
 
 module.exports = router

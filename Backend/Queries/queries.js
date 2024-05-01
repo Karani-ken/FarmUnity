@@ -112,13 +112,12 @@ const showPostsTableQuery = 'SHOW TABLES LIKE "posts"';
 const postTable = `CREATE TABLE posts (
     post_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    image VARCHAR(255),
+    content TEXT NOT NULL,   
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )`;
-const createPost = `INSERT INTO posts (title, content, image, user_id) VALUES (?, ?, ?, ?)`;
-
+const createPost = `INSERT INTO posts (title, content,user_id) VALUES (?, ?, ?)`;
+const getPosts = `SELECT * FROM posts`
 // Comments queries
 const showCommentsTableQuery = 'SHOW TABLES LIKE "comments"';
 const commentsTable = `CREATE TABLE comments (
@@ -188,5 +187,6 @@ module.exports = {
   updateUsers,
   deleteUser,
   updateProductStatus,
-  getUserProducts
+  getUserProducts,
+  getPosts
 };  

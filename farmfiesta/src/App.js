@@ -17,6 +17,7 @@ import PaymentSuccessPage from "./Components/PaymentSuccessPage";
 import PaymentFailedPage from "./Components/PaymentFailedPage";
 import Footer from "./Components/Footer";
 import EditProfile from "./MainComponents/EditProfile";
+import CreatePost from "./Components/CreatePost";
 function App() {
   const handleClick = () => {
     window.open('https://bit.ly/i-mkulima', '_blank');
@@ -37,6 +38,7 @@ function App() {
           <Route path='/add-product' element={<AddProduct />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/orders' element={<Orders />} />
+          <Route path='/create-post' element={<CreatePost/>} />
           <Route path='/edit-profile' element={<EditProfile/>} />
           <Route path='/payment-success' element={<PaymentSuccessPage />} />
           <Route path='/payment-failed' element={<PaymentFailedPage />} />

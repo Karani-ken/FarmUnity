@@ -1,63 +1,56 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 const Blogs = () => {
-    return (
+    const navigate = useNavigate()
+    const [blogs, setBlogs] = useState([])
+    const [users, setUsers]= useState([])
+   
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            const response = await axios.get('http://localhost:4000/posts/all-posts')
+            //console.log(response.data)
+            setBlogs(response.data)           
+        }
+        const getUsers = async ()=>{
+            const response = await axios.get(`http://localhost:4000/auth/get-users`)
+            setUsers(response.data)
+        } 
+        getUsers()
+        fetchBlogs()
+    }, [])
+    const handleCreatePost = () => {
+        navigate('/create-post')
+    }
 
+    return (
         <div className='p-3 m-2'>
             <h1 className="font-bold text-3xl text-center m-2 p-2">Blogs</h1>
-            <button className="btn">Add</button>
+            <button className="btn btn-primary" onClick={handleCreatePost}>Create a Post</button>
             <div className="d-lg-flex justify-around gap-5">
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                    <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">Dairy Farming</div>
-                        <p className="text-gray-700 text-base">Lorem ipsum dolor sit, amet consectetur
-                            adipisicing elit. Pariatur repudiandae adipisci cupiditate ea. Aperiam pariatur sint
-                            reiciendis dolorem laudantium in,
-                            distinctio dolore quasi aliquid hic animi eligendi doloribus ad reprehenderit.</p>
-                    </div>
-                    <div className="px-6 py-4">
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            John Doe
-                        </span>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            12/4/2024
-                        </span>
-                    </div>
-                </div>
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                    <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">Maize Planting</div>
-                        <p className="text-gray-700 text-base">Lorem ipsum dolor sit, amet consectetur
-                            adipisicing elit. Pariatur repudiandae adipisci cupiditate ea. Aperiam pariatur sint
-                            reiciendis dolorem laudantium in,
-                            distinctio dolore quasi aliquid hic animi eligendi doloribus ad reprehenderit.</p>
-                    </div>
-                    <div className="px-6 py-4">
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            John Doe
-                        </span>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            12/4/2024
-                        </span>
-                    </div>
-                </div>
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                    <div className="px-6 py-4">
-                        <div className="font-bold text-xl mb-2">Farm inputs</div>
-                        <p className="text-gray-700 text-base">Lorem ipsum dolor sit, amet consectetur
-                            adipisicing elit. Pariatur repudiandae adipisci cupiditate ea. Aperiam pariatur sint
-                            reiciendis dolorem laudantium in,
-                            distinctio dolore quasi aliquid hic animi eligendi doloribus ad reprehenderit.</p>
-                    </div>
-                    <div className="px-6 py-4">
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            John Doe
-                        </span>
-                        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                            12/4/2024
-                        </span>
-                    </div>
-                </div>
+                {blogs && blogs.map(blog => {
+                    return (
+                        <div className="max-w-sm rounded  shadow-lg" style={{height:'250px'}} key={blog.post_id}>
+                            <div className="px-6 py-4">
+                                <div className="font-bold text-xl mb-2">{blog.title}</div>
+                                <p className="text-gray-700 text-base overflow-y-scroll" style={{height:'100px'}}>{blog.content}</p>
+                            </div>
+                            <div className="px-6 py-2">
+                                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                                {users && users.map(user =>{
+                                    if(user.ID === blog.user_id){
+                                        return user.name
+                                    }
+                                })}
+                                </span>
+                                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+                                {new Date(blog.created_at).toLocaleDateString()}
+                                </span>
+                            </div>                            
+                        </div>
+                    )
+                })}
+
 
             </div>
 
