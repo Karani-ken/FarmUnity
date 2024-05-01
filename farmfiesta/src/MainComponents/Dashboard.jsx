@@ -20,7 +20,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(fetchProducts())
     const fetchMyProducts = async () => {
-      const response = await axios.get(`http://localhost:4000/products/my-products/${decoded.userId}`)
+      const response = await axios.get(`https://api.fusionafricatech.co.ke/products/my-products/${decoded.userId}`)
       //console.log(response.data)
       setMyProducts(response.data)
     }
@@ -47,7 +47,7 @@ const Dashboard = () => {
       const statusData = {
         status
       }
-       await axios.put(`http://localhost:4000/products/update-status/${product_id}`, statusData)
+       await axios.put(`https://api.fusionafricatech.co.ke/products/update-status/${product_id}`, statusData)
        toast.success("Product status updated")
     } catch (error) {
       console.log(error)
@@ -61,7 +61,7 @@ const Dashboard = () => {
       const statusData = {
         status
       }
-       await axios.put(`http://localhost:4000/products/update-status/${product_id}`, statusData)
+       await axios.put(`https://api.fusionafricatech.co.ke/products/update-status/${product_id}`, statusData)
        toast.success("Product status updated")
     } catch (error) {
       console.log(error)
@@ -70,7 +70,7 @@ const Dashboard = () => {
   }
   const deleteProduct = async (product_id) =>{
     try {
-      await axios.delete(`http://localhost:4000/products/delete/${product_id}`)
+      await axios.delete(`https://api.fusionafricatech.co.ke/products/delete/${product_id}`)
       toast.success("Product was deleted")
     } catch (error) {
       console.log(error)

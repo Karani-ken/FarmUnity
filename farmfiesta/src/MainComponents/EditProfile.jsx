@@ -18,7 +18,7 @@ const EditProfile = () => {
     const fetchUserProfile = async () => {
       try {
         const id = decoded.userId; // Replace 'user_id' with the actual user ID
-        const response = await axios.get(`http://localhost:4000/auth/profile/${id}`);
+        const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/profile/${id}`);
         const userProfile = response.data;
         setFormData(userProfile);
       } catch (error) {
@@ -49,11 +49,10 @@ const EditProfile = () => {
           formDataWithModifiedFields.append(key, formData[key]);
         }
       }
-      const response = await axios.put(`http://localhost:4000/auth/update-profile/${id}`, formDataWithModifiedFields);
-      console.log('Profile updated:', response.data);
+      const response = await axios.put(`https://api.fusionafricatech.co.ke/auth/update-profile/${id}`, formDataWithModifiedFields);    
       toast.success("Profile Updated")
     } catch (error) {
-      console.error('Error updating profile:', error.response.data);
+      console.error('Error updating profile:', error);
       toast.error("Could not Update Profile")
     }
   };

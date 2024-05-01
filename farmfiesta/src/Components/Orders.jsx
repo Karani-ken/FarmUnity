@@ -57,7 +57,7 @@ const Orders = () => {
 
   }
   return (
-    <div>
+    <div className='h-screen overflow-y-scroll'>
       <h3>All Orders</h3>
       <div className='table-responsive'>
         <table className="table table-striped">

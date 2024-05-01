@@ -21,10 +21,11 @@ const CreatePost = () => {
             const { title, content } = formData;
             const user_id = decoded.userId; // Replace 'user_id' with the actual user ID
             const postData = { title, content, user_id };
-            await axios.post('http://localhost:4000/posts/create-post', postData);
+            await axios.post('https://api.fusionafricatech.co.ke/posts/create-post', postData);
             // Handle success (e.g., show a success message)
-            console.log('Post created successfully');
+           // console.log('Post created successfully');
             toast.success('Article Posted Successfully')
+            setFormData({ title: '', content: '' });
         } catch (error) {
             console.error('Error creating post:', error.response.data);
            toast.error("Could not post article")

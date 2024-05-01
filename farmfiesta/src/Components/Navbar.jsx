@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { jwtDecode } from 'jwt-decode'
 import Logo from '../Assets/Image/farmunitylogo.png'
 const Navbar = () => {
   const navigate = useNavigate()
   const [isLoggedIn, setIsloggedIn] = useState(false);
   const token = localStorage.getItem('token');
+  const decoded = token ?  jwtDecode(token): null;
+
   useEffect(() => {
     if (token) {
       setIsloggedIn(true);
@@ -32,14 +35,16 @@ const Navbar = () => {
               </ul>
             </li>
             <li><Link to='/interactions'>Interactions</Link></li>
-
+            {isLoggedIn && decoded?.role === "farmer" && (
+              <li><Link to='/dashboard' style={{ textDecoration: 'none', color: 'black' }}>
+                Dashboard
+              </Link></li>)}
             {isLoggedIn ? (
               <>
                 <li>
                   <button className='btn btn-secondary' onClick={handleLogOut}>Log out</button>
-
                 </li>
-                <li><Link to='/dashboard' style={{ textDecoration: 'none', color: 'black' }}>Dashboard</Link></li>
+
                 <li><Link to='/orders' style={{ textDecoration: 'none', color: 'black' }}>Orders</Link></li>
               </>
 

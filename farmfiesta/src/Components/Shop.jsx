@@ -21,7 +21,7 @@ function Shop() {
     filterProducts()
   }, [dispatch])
   const handleProductSelect = (product) => {
-    navigate(`https://api.fusionafricatech.co.ke/product/${product.product_id}`)
+    navigate(`/product/${product.product_id}`)
   }
   return (
     <div className="text-center" style={{ margin: "0 10%",height:'100vh', overflowY:'scroll' }}>

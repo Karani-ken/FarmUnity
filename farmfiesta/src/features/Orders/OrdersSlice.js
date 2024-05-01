@@ -17,12 +17,12 @@ const OrdersSlice = createSlice({
         createOrderSuccess(state, action) {
             state.loading = false;
             // Optionally update state with payload if needed
-            toast.success("Order placed successfully"); // Display a success message
+            
         },
         createOrderFailure(state, action) {
             state.loading = false;
             state.error = action.payload.error; // Update error state with payload
-            toast.error("Failed to create order"); // Display an error message
+            //toast.error("Failed to create order"); // Display an error message
         },
         fetchOrdersRequest(state) {
             state.loading = true;
@@ -67,7 +67,7 @@ export const createOrder = (orderItemsData) => async (dispatch) => {
     console.log(orderItemsData)
     try {
         const token = localStorage.getItem('token'); // Get the token from local storage or wherever it's stored
-        const response = await axios.post("http://localhost:4000/orders/create-order", { orderItemsData }, {
+        const response = await axios.post("https://api.fusionafricatech.co.ke/orders/create-order", { orderItemsData }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -85,7 +85,7 @@ export const fetchOrders = () => async (dispatch) => {
     dispatch(fetchOrdersRequest());
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get("http://localhost:4000/orders/fetch-all-orders", {
+        const response = await axios.get("https://api.fusionafricatech.co.ke/orders/fetch-all-orders", {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
