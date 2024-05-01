@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Counties from './../Assets/Counties.json'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 const ApplicationForm = () => {
@@ -8,7 +8,7 @@ const ApplicationForm = () => {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
-    phone: '',    
+    phone: '',
     password: '',
     role: 'farmer'
   })
@@ -42,8 +42,8 @@ const ApplicationForm = () => {
       // Append form data to FormData object
       formData.append('name', userData.name);
       formData.append('email', userData.email);
-      formData.append('phone', userData.phone);     
-      formData.append('password', userData.password);     
+      formData.append('phone', userData.phone);
+      formData.append('password', userData.password);
       formData.append('role', userData.role)
 
       // Send form data to the server using Axios
@@ -59,11 +59,11 @@ const ApplicationForm = () => {
       setUserData({
         name: '',
         email: '',
-        phone: '',       
-        password: '',       
+        phone: '',
+        password: '',
         role: 'farmer'
       });
-      
+
       navigate('/login');
 
     } catch (error) {
@@ -72,14 +72,15 @@ const ApplicationForm = () => {
     }
   };
   return (
-    <div className="text-center" style={{ margin: "0 5%", height: "80vh" }}>
-      <h4 className="fw-bold" style={{ color: "#6A6666" }}>
-        Create Farmers Account
-      </h4>
+    <div className="text-center">
+
       <form onSubmit={handleSubmit}
         className="shadow-lg p-lg-5 p-2 text-start"
-        style={{ margin: "0 10%" }}
+        style={{ margin: "10%" }}
       >
+        <h4 className="fw-bold m-2 text-center" style={{ color: "#000",fontSize:'25px' }}>
+          Create Farmers Account
+        </h4>
         <div className="form-group">
           <label htmlFor="Name" className="fw-bold">Full Name</label>
           <input
@@ -116,8 +117,8 @@ const ApplicationForm = () => {
             placeholder="Enter your phone number"
             onChange={handleChange}
           />
-        </div>  
-     
+        </div>
+
         <div className="form-group">
           <label htmlFor="Name" className="fw-bold">County</label>
           <select name="county" className='form-control'>

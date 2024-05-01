@@ -81,7 +81,7 @@ const stripePayment = async (req, res) => {
 
     try {
         const order_id = req.params.orderId;
-        const order = await dbHandler.fetchOrderById(order_id)
+        const order = await dbHandler.fetchOrderById(order_id)  
       
         if (order[0].status === "Approved") {
             return res.status(500).json("Order is already paid for")

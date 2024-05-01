@@ -23,14 +23,17 @@ const addProduct = async (req, res) => {
         //save image url and publicID to the database
         const imageUrl = data.url;
         console.log(imageUrl)
+        const product_status = "available"
         // create a new product object
         const productData = {
             product_name,
             product_description,
             product_price: parseFloat(product_price),
             product_image: imageUrl,//cloudinary  url will be stored here
-            user_id
+            user_id,
+            product_status
         }
+        console.log(productData)
         //insert the product into the database
         await dbHandler.insertProduct(productData);
         res.status(201).json({ message: "Product added successfully!" });
@@ -94,16 +97,16 @@ const getProducts = async (req, res) => {
 
 //delete product
 const deleteProduct = async (req, res) => {
-    const { product_id } = req.params.id;
+    const {id } = req.params;
     try {
         //check if the product to delete exists
-        const existProduct = await dbHandler.getProductByID(product_id);
+        const existProduct = await dbHandler.getProductByID(id);
         if (!existProduct) {
             return res.status(404).json({ message: 'No Product Found with this ID' });
         }
-
+        console.log(id)
         //delete the product from the database if it exists
-        await dbHandler.deleteProduct(product_id);
+        await dbHandler.deleteProduct(id);
 
        return res.status(200).json({ message: 'Deleted Successfully' })
     } catch (error) {
@@ -113,7 +116,7 @@ const deleteProduct = async (req, res) => {
 }
 const updateProductStatus = async ( req, res) =>{
     try {
-        const status = req.body;
+        const {status} = req.body;
         const {id} = req.params
 
         await dbHandler.updateProductStatus(status, id)

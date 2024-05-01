@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 //import Products from "./../Assets/Fruits.json";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,21 +8,28 @@ function Shop() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const response = useSelector((state) => state.products)
+  const [availableProducts, setAvailableProducts]= useState([])
   const { products } = response;
-  console.log(products)
+  //console.log(products)
+
   useEffect(() => {
     dispatch(fetchProducts())
+    const filterProducts = ()=>{
+      const filteredProducts = products.filter(product => product.product_status === "available")
+      setAvailableProducts(filteredProducts)
+    }
+    filterProducts()
   }, [dispatch])
   const handleProductSelect = (product) => {
     navigate(`https://api.fusionafricatech.co.ke/product/${product.product_id}`)
   }
   return (
-    <div className="text-center" style={{ margin: "0 10%" }}>
-      <h1 className="fw-bold" style={{ color: "#6A6666" }}>
+    <div className="text-center" style={{ margin: "0 10%",height:'100vh', overflowY:'scroll' }}>
+      <h1 className="fw-bold p-3" style={{ color: "#6A6666",fontSize:'24px' }}>
         Shop
       </h1>
       <div className="d-flex flex-wrap justify-content-around">
-        {products.map((product) => (
+        {availableProducts.map((product) => (
           <div key={product.id} className="card m-2 shadow" style={{ width: "18rem", border: 'none' }}>
             <img
               src={product.product_image}

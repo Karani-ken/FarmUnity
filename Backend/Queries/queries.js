@@ -42,19 +42,17 @@ const showProductsTable = 'SHOW TABLES LIKE "Products"';
 const createProductsTable = `CREATE TABLE Products (
     product_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     product_name VARCHAR(255),
-    product_description TEXT,
-    product_rating FLOAT,
+    product_description TEXT,   
     product_image VARCHAR(255),
     product_price DECIMAL(10, 2),   
     user_id INT NOT NULL,
     product_status VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES users(ID) ON DELETE CASCADE
 )`;
-const insertProducts = `INSERT INTO Products (product_name, product_description, product_price, product_image, product_status, user_id) VALUES (?, ?, ?, ?, ?,?)`;
+const insertProducts = `INSERT INTO Products (product_name, product_description, product_price, product_image, product_status, user_id) VALUES (?, ?, ?, ?, ?, ?)`;
 const updateProduct = `UPDATE Products
   SET product_name = ?,
-      product_description = ?,
-      product_rating = ?,  
+      product_description = ?,     
       product_image = ?,
       product_price = ?
   WHERE product_id = ? AND
@@ -64,8 +62,8 @@ const updateProductStatus = `
 const getUserProducts = `SELECT DISTINCT product_name FROM Products WHERE user_id = ?
 `
 const getProducts = `SELECT * FROM Products ORDER BY product_id ASC`;
-const deleteProduct = `DELETE FROM Products WHERE product_id = ? AND user_id = ?`;
-const getProductByID = `SELECT * FROM Products WHERE product_id = ? AND user_id = ?`;
+const deleteProduct = `DELETE FROM Products WHERE product_id = ?`;
+const getProductByID = `SELECT * FROM Products WHERE product_id = ? `;
 const getProductCount = `SELECT COUNT(*) FROM Products`;
 const getProductCategories = `SELECT DISTINCT product_name FROM Products WHERE user_id = ?`;
 
@@ -191,4 +189,4 @@ module.exports = {
   deleteUser,
   updateProductStatus,
   getUserProducts
-};
+};  

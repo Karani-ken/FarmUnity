@@ -1,25 +1,25 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios'
 import { toast } from 'react-toastify'
 function Register() {
   const [userData, setUserData] = useState({
-    name:'',
-    email:'',
-    password:'',
-    role:'client'
+    name: '',
+    email: '',
+    password: '',
+    role: 'client'
   })
-  const handleChange = (e)=>{
-    setUserData((prevState)=>({
+  const handleChange = (e) => {
+    setUserData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
   }
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('https://api.fusionafricatech.co.ke/auth/register', userData);
-      console.log("registration successfull",response.data);
+      console.log("registration successfull", response.data);
       toast.success("Registration successful")
       setUserData({
         name: '',
@@ -28,20 +28,20 @@ function Register() {
         role: 'client'
       });
     } catch (error) {
-      console.log("register failed", error)    
+      console.log("register failed", error)
       toast.error("failed!!");
     }
   }
   return (
-    <div className="text-center" style={{ margin: "0 5%", height: "80vh" }}>
-      <h4 className="fw-bold" style={{ color: "#6A6666" }}>
-        Create Account
-      </h4>
+    <div className="text-center" style={{ margin: "0 5%", height: "100vh" }}>
       <form onSubmit={handleSubmit}
         className="shadow-lg p-lg-5 p-2 text-start"
-        style={{ margin: "0 10%", height: "70vh" }}
+        style={{ margin: "10%" }}
       >
-          <div className="form-group">
+        <h4 className="fw-bold m-2" style={{ color: "#6A6666" }}>
+          Create Account
+        </h4>
+        <div className="form-group">
           <label htmlFor="Name" className="fw-bold">Full Name</label>
           <input
             type="text"
@@ -49,8 +49,8 @@ function Register() {
             name="name"
             value={userData.name}
             placeholder="Enter your name"
-           onChange={handleChange}
-          />          
+            onChange={handleChange}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="Email" className="fw-bold">Email address</label>
@@ -77,15 +77,15 @@ function Register() {
             placeholder="Password"
             onChange={handleChange}
           />
-          
+
         </div>
         <div className="d-lg-flex justify-content-between p-3 m-4 align-items-center">
           <p>
-            <Link to="/login" style={{ textDecoration: "none",color:'#39c758' }}>
+            <Link to="/login" style={{ textDecoration: "none", color: '#39c758' }}>
               Already have an account? Login here
             </Link>
           </p>
-          
+
           <button
             type="submit"
             className="btn btn-primary m-3 p-2 w-50"

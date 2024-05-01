@@ -127,10 +127,10 @@ const updateUser = async (ID, updatedUserData) => {
 //insert a new product to the database
 const insertProduct = async (productData) => {
     const { product_name, product_description,
-        product_price, product_image, user_id } = productData;
+        product_price, product_image, product_status, user_id } = productData;
     try {
         await executeQuery(queries.insertProducts, [product_name, product_description,
-            product_price, product_image, user_id])
+            product_price, product_image, product_status, user_id])
         console.log("product added successfully");
 
     } catch (error) {
@@ -155,7 +155,7 @@ const updateProduct = async (product_id, newProductData) => {
 //delete a product
 const deleteProduct = async (product_id) => {
     try {
-        await executeQuery(queries.deleteProduct, [product_id, user_id])
+        await executeQuery(queries.deleteProduct, [product_id])
         console.log(`The product with id ${product_id} has been deleted`);
     } catch (error) {
         throw error;
@@ -193,7 +193,7 @@ const getProductCount = async () => {
 //update product quantity on purchase
 const updateProductStatus = async (product_status,product_id) =>{
     try {
-        await executeQuery(queries.updateProductQuantity,[product_status,product_id])
+        await executeQuery(queries.updateProductStatus,[product_status,product_id])
         
     } catch (error) {
         console.error(error)

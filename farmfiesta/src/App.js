@@ -16,6 +16,7 @@ import Interactions from "./Components/Interactions";
 import PaymentSuccessPage from "./Components/PaymentSuccessPage";
 import PaymentFailedPage from "./Components/PaymentFailedPage";
 import Footer from "./Components/Footer";
+import EditProfile from "./MainComponents/EditProfile";
 function App() {
   const handleClick = () => {
     window.open('https://bit.ly/i-mkulima', '_blank');
@@ -36,13 +37,14 @@ function App() {
           <Route path='/add-product' element={<AddProduct />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/orders' element={<Orders />} />
+          <Route path='/edit-profile' element={<EditProfile/>} />
           <Route path='/payment-success' element={<PaymentSuccessPage />} />
           <Route path='/payment-failed' element={<PaymentFailedPage />} />
           <Route path='/interactions' element={<Interactions />} />
         </Routes>
       </Router>
-      <div class="fixed bottom-6 right-6">
-        <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
+      <div className="fixed bottom-6 right-6">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
           onClick={handleClick}>
           Chat with Mkulima assistant
         </button>

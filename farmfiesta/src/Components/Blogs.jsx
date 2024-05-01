@@ -5,6 +5,7 @@ const Blogs = () => {
 
         <div className='p-3 m-2'>
             <h1 className="font-bold text-3xl text-center m-2 p-2">Blogs</h1>
+            <button className="btn">Add</button>
             <div className="d-lg-flex justify-around gap-5">
                 <div className="max-w-sm rounded overflow-hidden shadow-lg">
                     <div className="px-6 py-4">
