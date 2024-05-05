@@ -1,6 +1,6 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { placeOrder } from "../features/Orders/OrdersSlice"; // Import the placeOrder action
 import {
   removeFromCart,
@@ -8,15 +8,30 @@ import {
   decreaseCount,
   getTotalCartAmount,
 } from "../features/Shopping Cart/CartSlice";
-
+import { jwtDecode } from 'jwt-decode'
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cart);
   const totalAmount = useSelector(getTotalCartAmount);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const [isLoggedIn, setIsloggedIn] = useState(false);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    if (token) {
+      setIsloggedIn(true);
+    } else {
+      setIsloggedIn(false)
+    }
+  }, [token])
 
   // Function to handle placing order
   const handlePlaceOrder = () => {
-    dispatch(placeOrder()); // Dispatch the placeOrder action
+    if(isLoggedIn){
+      dispatch(placeOrder());
+    }else{
+      navigate('/login')
+    }
+     // Dispatch the placeOrder action
   };
 
   return (

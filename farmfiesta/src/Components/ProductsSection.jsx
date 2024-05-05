@@ -14,10 +14,7 @@ function ProductsSection() {
             <p className="card-text">
             Explore a colorful world of fresh, locally-sourced 
             vegetables, ready to fill your cart with health and flavor.
-            </p>
-            <a href="#" className="btn btn-primary" style={{background:'#39C758',border:'none'}}>
-              Find out more
-            </a>
+            </p>           
           </div>
         </div>
         <div className="card m-2 shadow-lg" style={{width: '18rem',background:'#f5f5f5',border:"none"}}>
@@ -27,10 +24,7 @@ function ProductsSection() {
             <p className="card-text">
             Explore a colorful world of fresh, locally-sourced 
             vegetables, ready to fill your cart with health and flavor.
-            </p>
-            <a href="#" class="btn btn-primary" style={{background:'#39C758',border:'none'}}>
-              Find out more
-            </a>
+            </p>           
           </div>
         </div>
         <div className="card m-2 shadow-lg" style={{width: '18rem',background:'#f5f5f5',border:"none"}}>
@@ -40,10 +34,7 @@ function ProductsSection() {
             <p className="card-text">
             Explore a colorful world of fresh, locally-sourced
              vegetables, ready to fill your cart with health and flavor.
-            </p>
-            <a href="#" class="btn btn-primary" style={{background:'#39C758',border:'none'}}>
-              Find out more
-            </a>
+            </p>           
           </div>
         </div>
         

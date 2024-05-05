@@ -1,26 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 const Blogs = () => {
     const navigate = useNavigate()
     const [blogs, setBlogs] = useState([])
-    const [users, setUsers]= useState([])
-   
+    const [users, setUsers] = useState([])
+    const [isLoggedIn, setIsloggedIn] = useState(false);
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
         const fetchBlogs = async () => {
             const response = await axios.get('https://api.fusionafricatech.co.ke/posts/all-posts')
             //console.log(response.data)
-            setBlogs(response.data)           
+            setBlogs(response.data)
         }
-        const getUsers = async ()=>{
+        const getUsers = async () => {
             const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/get-users`)
             setUsers(response.data)
-        } 
+        }
+        if (token) {
+            setIsloggedIn(true);
+          } else {
+            setIsloggedIn(false)
+          }
         getUsers()
         fetchBlogs()
-    }, [])
-    const handleCreatePost = () => {
-        navigate('/create-post')
+    }, [token])
+    const handleCreatePost = async () => {
+        if (isLoggedIn) {
+            navigate('/create-post')
+        } else {
+            navigate('/login')
+        }
+
     }
 
     return (
@@ -29,21 +42,21 @@ const Blogs = () => {
             <button className="btn btn-primary" onClick={handleCreatePost}>Create a Post</button>
             <div className="d-lg-flex justify-around gap-5">
                 {users && blogs.map(blog => {
-                     const user = users.find(user => user.ID === blog.user_id);
+                    const user = users.find(user => user.ID === blog.user_id);
                     return (
-                        <div className="max-w-sm rounded  shadow-lg" style={{height:'250px'}} key={blog.post_id}>
+                        <div className="max-w-sm rounded  shadow-lg" style={{ height: '250px' }} key={blog.post_id}>
                             <div className="px-6 py-4">
                                 <div className="font-bold text-xl mb-2">{blog.title}</div>
-                                <p className="text-gray-700 text-base overflow-y-scroll" style={{height:'100px'}}>{blog.content}</p>
+                                <p className="text-gray-700 text-base overflow-y-scroll" style={{ height: '100px' }}>{blog.content}</p>
                             </div>
                             <div className="px-6 py-2">
                                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                                {user ? user.name : 'Unknown User'}
+                                    {user ? user.name : 'Unknown User'}
                                 </span>
                                 <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-                                {new Date(blog.created_at).toLocaleDateString()}
+                                    {new Date(blog.created_at).toLocaleDateString()}
                                 </span>
-                            </div>                            
+                            </div>
                         </div>
                     )
                 })}
