@@ -142,6 +142,42 @@ const likesTable = `CREATE TABLE likes (
 )`;
 const likePost = `INSERT INTO likes (post_id, user_id) VALUES (?, ?)`;
 
+//DELIVERIES
+//show deliveries table
+const showDeliveriesTable = 'SHOW TABLES LIKE "deliveries"';
+//create delivery table
+const deliveryTable = `
+  CREATE TABLE deliveries (
+    delivery_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT UNIQUE,
+    customer_id INT,
+    status VARCHAR(50),
+    company_id INT,
+    pickup_station VARCHAR(255),
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (customer_id) REFERENCES users(ID),
+    FOREIGN KEY (company_id) REFERENCES users(ID)
+);`
+//insert into deliveries table
+const insertDelivery =`INSERT INTO deliveries (order_id, customer_id, status, company_id, pickup_station)
+VALUES (?, ?, ?, ?, ?);
+`
+//get customer deliveries
+const getCustomerDeliveries = `SELECT * FROM deliveries WHERE customer_id = ?;`
+//get company deliveries
+const getCompanyDeliveries = `SELECT * FROM deliveries WHERE company_id = ?;`
+//get delivery by delivery id
+const getDeliveryById = `SELECT * FROM deliveries WHERE delivery_id = ?;`
+//update delivery status
+const deliveryStatusUpdate = `UPDATE deliveries
+SET status = ?
+WHERE delivery_id = ?';`
+//delete cancelled orders
+const deleteDelivery = `DELETE FROM deliveries
+WHERE delivery_id = ? AND status = 'cancel';`
+
+
+
 module.exports = {
   createDatabase,
   showDatabases,
@@ -188,5 +224,13 @@ module.exports = {
   deleteUser,
   updateProductStatus,
   getUserProducts,
-  getPosts
+  getPosts,
+  deliveryTable,
+  deliveryStatusUpdate,
+  getCompanyDeliveries,
+  getDeliveryById,
+  getCustomerDeliveries,
+  insertDelivery,
+  deleteDelivery,
+  showDeliveriesTable
 };  

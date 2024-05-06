@@ -41,7 +41,8 @@ const createTableIfNotExists = async () => {
         { name: 'comments', query: queries.showCommentsTableQuery, createQuery: queries.commentsTable },
         { name: 'likes', query: queries.showLikesTableQuery, createQuery: queries.likesTable },
         { name: 'orders', query: queries.showOrdersTable, createQuery: queries.createOrdersTable },
-        { name: 'orderitems', query: queries.showOrderItemsTable, createQuery: queries.createOrderItemsTable }
+        { name: 'orderitems', query: queries.showOrderItemsTable, createQuery: queries.createOrderItemsTable },
+        { name: 'deliveries', query: queries.showDeliveriesTable, createQuery: queries.deliveryTable }
     ];
     try {
         for (const table of tables) {
@@ -319,6 +320,68 @@ const getAllPosts = async () => {
     }   
 
 }
+
+//Deliveries
+//Todo: Insert Delivery
+const insertDelivery = async (deliveryData) => {
+    const { order_id, customer_id, status, company_id, pickup_station } = deliveryData;
+    try {
+        await executeQuery(queries.insertDelivery, [order_id, customer_id, status, company_id, pickup_station]);
+        console.log("Delivery was created successfully");
+    } catch (error) {
+        console.log(error);
+    }
+}
+//Todo: update delivery status
+const updateDeliveryStatus = async (status, delivery_id) => {
+    try {
+        await executeQuery(queries.updateDeliveryStatus, [status, delivery_id]);
+        console.log("Delivery status updated successfully");
+    } catch (error) {
+        console.log(error);
+    }
+};
+//Todo: getCustomerDeliveries
+const getCustomerDeliveries = async (customer_id) => {
+    try {
+        const result = await executeQuery(queries.getCustomerDeliveries, [customer_id]);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+//Todo: getCompanyDeliveries
+const getCompanyDeliveries = async (company_id) => {
+    try {
+        const result = await executeQuery(queries.getCompanyDeliveries, [company_id]);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+};
+//Todo:getDeliveryById
+const getDeliveryById = async (delivery_id) => {
+    try {
+        const result = await executeQuery(queries.getDeliveryById, [delivery_id]);
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+};
+//Todo: delete Cancelled Deliveries
+const deleteCancelledDelivery = async (delivery_id) => {
+    try {
+        await executeQuery(queries.deleteDelivery, [delivery_id]);
+        console.log("Cancelled delivery deleted successfully");
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+
+
+
 //initialize database
 const initializeDatabase = async () => {
     try {
@@ -356,5 +419,12 @@ module.exports = {
     updateUser,
     updateProductStatus,
     getuserProducts,
-    getAllPosts
+    getAllPosts,
+    insertDelivery,
+    getCompanyDeliveries,
+    getCustomerDeliveries,
+    getDeliveryById,
+    updateDeliveryStatus,
+    deleteCancelledDelivery
+
 }

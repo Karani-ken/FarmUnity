@@ -7,10 +7,11 @@ const authRoutes = require('./Routes/auth.routes')
 const productRoutes = require('./Routes/products.routes')
 const postsRoutes = require("./Routes/post.routes")
 const orderRoutes = require("./Routes/order.routes")
+const deliveries = require("./Routes/delivery.routes")
 const app = express();
-app.use(cors())
 const port = process.env.PORT;
-app.use(bodyParser.json())
+app.use(cors())
+app.use(express.json())
 
 //connect to a database
 dbHandler.pool.getConnection((err, connection)=>{
@@ -28,7 +29,8 @@ dbHandler.pool.getConnection((err, connection)=>{
 app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
 app.use('/posts',postsRoutes)
-app.use('/orders', orderRoutes)    
+app.use('/orders', orderRoutes)   
+app.use("/deliveries", deliveries) 
 app.listen(port,()=>{
     console.log(`App started on http://localhost:${port}`);       
 })     
