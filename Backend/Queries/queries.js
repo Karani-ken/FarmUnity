@@ -151,7 +151,7 @@ const deliveryTable = `
     delivery_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT UNIQUE,
     customer_id INT,
-    status VARCHAR(50),
+    status VARCHAR(100),
     company_id INT,
     pickup_station VARCHAR(255),
     FOREIGN KEY (order_id) REFERENCES orders(order_id),
@@ -169,9 +169,9 @@ const getCompanyDeliveries = `SELECT * FROM deliveries WHERE company_id = ?;`
 //get delivery by delivery id
 const getDeliveryById = `SELECT * FROM deliveries WHERE delivery_id = ?;`
 //update delivery status
-const deliveryStatusUpdate = `UPDATE deliveries
+const deliveryStatusUpdate = `UPDATE deliveries  
 SET status = ?
-WHERE delivery_id = ?';`
+WHERE delivery_id = ?;`
 //delete cancelled orders
 const deleteDelivery = `DELETE FROM deliveries
 WHERE delivery_id = ? AND status = 'cancel';`

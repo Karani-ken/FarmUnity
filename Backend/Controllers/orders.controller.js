@@ -4,7 +4,27 @@ const stripe = require('stripe')(process.env.STRIPE_KEY)
 const pdf = require('html-pdf')
 const pdfTemplate = require('../documents/invoice');
 const invoice = require('../documents/invoice');
-//TODO: CREATE ORDER
+//TODO: CREATE ORDER 
+//sample test data
+/**{
+    "orderItemsData": [
+        {
+            "product_id": 1,
+            "product_name": "Product 1",
+            "product_image": "product1.jpg",
+            "product_price": 10.99,
+            "quantity": 2
+        },
+        {
+            "product_id": 2,
+            "product_name": "Product 2",
+            "product_image": "product2.jpg",
+            "product_price": 15.99,
+            "quantity": 1
+        }
+    ]
+}
+ */
 const createOrder = async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     // Decode the JWT token to get the user_id

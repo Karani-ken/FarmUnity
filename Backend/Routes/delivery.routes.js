@@ -8,11 +8,11 @@ const { createDelivery,
 
 const router = express.Router();
 
-router.post('/deliveries', createDelivery);
-router.put('/deliveries/:delivery_id', updateDeliveryStatus);
-router.get('/customers/:customer_id/deliveries', getCustomerDeliveries);
-router.get('/companies/:company_id/deliveries', getCompanyDeliveries);
-router.get('/deliveries/:delivery_id', getDeliveryById);
-router.delete('/deliveries/:delivery_id', deleteDelivery);
+router.post('/create', createDelivery);
+router.put('/update-delivery/:id', updateDeliveryStatus);
+router.get('/get-customers/:id', getCustomerDeliveries);
+router.get('/get-company/:id', getCompanyDeliveries);
+router.get('/get-delivery/:id', getDeliveryById);
+router.delete('/delete/:id', deleteDelivery);
 
 module.exports = router

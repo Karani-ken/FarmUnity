@@ -291,8 +291,7 @@ const fetchOrderById = async (order_id) => {
 }
 const orderWithItems = async (order_id) => {
     try {
-        const result = await executeQuery(queries.fetchOrderWithOrderItems, [order_id])
-        console.log(result)
+        const result = await executeQuery(queries.fetchOrderWithOrderItems, [order_id])       
         return result;
     } catch (error) {
         console.log(error)
@@ -335,7 +334,7 @@ const insertDelivery = async (deliveryData) => {
 //Todo: update delivery status
 const updateDeliveryStatus = async (status, delivery_id) => {
     try {
-        await executeQuery(queries.updateDeliveryStatus, [status, delivery_id]);
+        await executeQuery(queries.deliveryStatusUpdate, [status, delivery_id]);
         console.log("Delivery status updated successfully");
     } catch (error) {
         console.log(error);
