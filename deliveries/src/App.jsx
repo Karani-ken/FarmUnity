@@ -5,14 +5,23 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import NavBar from "./Components/Navigation/Navbar"
 import DeliveriesDashboard from "./Components/Dashboards/DeliveriesDashboard";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Register from "./Components/Authentication/Register";
+import Login from "./Components/Authentication/Login";
 
 
-export default function App(){
-  return(
+export default function App() {
+  return (
     <div>
-        <NavBar/>
-        <DeliveriesDashboard/>
-    </div>  
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path="/" exact element={<DeliveriesDashboard />} />
+          <Route path="/register" element={<Register/>} />
+          <Route path="/login" element={<Login/>}/>
+        </Routes>
+      </Router>
+    </div>
   )
 }
 
