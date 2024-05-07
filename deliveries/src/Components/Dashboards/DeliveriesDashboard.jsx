@@ -1,5 +1,6 @@
 import React from 'react'
-import { Card, CardActions, Box, CardContent, Typography } from '@mui/material'
+import { Card, Box, CardContent, Typography } from '@mui/material'
+import OrdersTable from '../Tables/OrdersTable';
 const DeliveriesDashboard = () => {
   const bull = (
     <Box
@@ -9,14 +10,19 @@ const DeliveriesDashboard = () => {
       •
     </Box>
   );
+  const [value, setValue] = React.useState(0);
 
-  const card =(title,count) => (
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const card = (title, count) => (
     <React.Fragment>
-      <CardContent sx={{textAlign:"center"}}>
-        <Typography variant='h1'  sx={{ fontSize: 20,fontWeight:500,color:"#fff" }} color="text.secondary" gutterBottom>
+      <CardContent sx={{ textAlign: "center" }}>
+        <Typography variant='h1' sx={{ fontSize: 20, fontWeight: 500, color: "#fff" }} color="text.secondary" gutterBottom>
           {title}
         </Typography>
-        <Typography variant='h1'  sx={{ fontSize: 20,fontWeight:500,color:"#fff" }} color="text.secondary" gutterBottom>
+        <Typography variant='h1' sx={{ fontSize: 20, fontWeight: 500, color: "#fff" }} color="text.secondary" gutterBottom>
           {count}
         </Typography>
 
@@ -26,7 +32,7 @@ const DeliveriesDashboard = () => {
   return (
 
     <div>
-      <Typography variant='h2' sx={{fontSize:24,fontWeight:"bold", textAlign:'center',padding:5}}>G4S Deliveries </Typography>
+      <Typography variant='h2' sx={{ fontSize: 24, fontWeight: "bold", textAlign: 'center', padding: 5 }}>G4S Deliveries </Typography>
       <Box className="shadow-md  block p-3  md:flex  ">
         <Card>
           <div className='bg-slate-500 m-2 rounded-lg '>
@@ -47,6 +53,11 @@ const DeliveriesDashboard = () => {
           </div>
         </Card>
       </Box>
+      {/**Delivery Filters */}
+      <Typography variant='h4' className='p-1 text-center'>Deliveries</Typography>
+     
+      <OrdersTable/>
+
     </div>
   )
 }
