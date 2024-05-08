@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/**Dashboard styles */
+
+.side-bar {
+  position: fixed;
+  background-color: blue;
+  width: 120px;
+  text-align: center;
+  color: #fff;
+  border-radius: 20px 0 0 20px;
+  height: 75dvh;
+  margin: 0 10px;
+}
+
+.side-bar hr {
+  border: 1px solid #fff;
+}
+
+.nav-links {
+  margin-top: 2rem;
+}
+
+.nav-links ul {
+  list-style: none;
+}
+
+.nav-links ul li {
+  margin: 15px 0;
+  border: 1px solid #fff;
+  padding: 5px;
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+}
+
+.nav-links ul li:hover {
+  color: red;
+  background: #fff;
+}
+
+.dashboard {
+  padding: 20px;
+}
+
+.profile-details {
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.50);
+  padding: 10px;
+}
+.details-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+.small-container{
+  padding: 5px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  width: 100%;
+  margin: 5px;
+}
+.product-card{
+  background: #39C758;
+  padding: 5px;
+  border-radius: 10px;
+  color: #fff;
+}
+.glassCard{
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+}
