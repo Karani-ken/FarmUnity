@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver'
 import Stepper from '../OrderTracking/Stepper';
 import StepperControll from '../OrderTracking/StepperControll';
 import Card from './Card';
+import OrdersTable from './OrdersTable';
 const Orders = () => {
 
   const dispatch = useDispatch();
@@ -60,45 +61,20 @@ const Orders = () => {
 
   }
   return (
-    <div className='h-screen overflow-y-scroll'>
+    <div className='h-screen overflow-y-scroll p-4'>
+      <h1 className="text-xl mx-4">Orders Dashboard</h1>
       <div className='md:flex justify-start p-2 m-2'>
-        <Card status={"Total"} count={3}/>
-        <Card status={"Active"} count={1}/>
-        <Card status={"Delivered"} count={2} />
+        <Card status={"Total"} count={3} bg={"bg-emerald-400"} />
+        <Card status={"Active"} count={1} bg={"bg-rose-400"} />
+        <Card status={"Delivered"} count={2} bg={"bg-sky-400"} />
+      </div>
+      <div className="p-2">
+        <h3 className="text-2xl font-bold text-center m-2">
+          My Orders
+        </h3>
+        <OrdersTable />
       </div>
 
-      <h3>All Orders</h3>
-      <div className='table-responsive'>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Order Id</th>
-              <th scope="col">Date</th>
-              <th scope="col">Status</th>
-              <th scope="col">Order Items</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.map((order) => (
-              <tr key={order.order_id}>
-                <td>{order.order_id}</td>
-                <td>{new Date(order.order_date).toLocaleDateString()}</td>
-                <td>{order.status}</td>
-                <td>
-                  <button className="btn btn-primary" onClick={() => handleInvoice(order.order_id)}>Get Invoice</button>
-                </td>
-                <td>
-                  <button className="btn btn-primary" onClick={() => handlePayment(order.order_id)}>Pay</button>
-                  <button className="btn btn-success mx-1" onClick={() => validatePayment(order.order_id)}>Confirm Payment</button>
-                  <button className="btn btn-outline-danger">Cancel</button>
-                </td>
-              </tr>
-            ))}
-
-          </tbody>
-        </table>
-      </div>
     </div>
   )
 }

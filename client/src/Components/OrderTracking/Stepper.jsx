@@ -2,11 +2,10 @@ import React from 'react';
 
 const Stepper = ({ steps, currentStep }) => {
     return (
-        <div className='mx-4 p-4 flex justify-between items-center'>
-           
+        <div className='mx-2 p-2 flex justify-between items-center'>
             {steps.map((step, index) => (
                 <div key={index} className='w-full flex items-center'>
-                    <div className={`relative flex flex-col items-center ${index <= currentStep ? 'text-white' : 'text-teal-600'}`}>
+                    <div className={`relative flex flex-col items-center ${index <= currentStep ? 'text-emerald-600' : 'text-rose-300'}`}>
                         <div className={`rounded-full transition duration-500 ease-in-out border-2 ${index <= currentStep ? 'bg-green-500 border-green-500' : 'border-gray-300'} h-12 w-12 flex items-center justify-center py-3`}>
                             {index + 1}
                         </div>
