@@ -20,6 +20,7 @@ import Footer from "./Components/Footer";
 import EditProfile from "./MainComponents/EditProfile";
 import CreatePost from "./Components/Blogs/CreatePost";
 import OrderTracking from "./Components/OrderTracking/OrderTracking";
+import DeliveryForm from "./Components/OrderTracking/DeliveryForm";
 function App() {
   const handleClick = () => {
     window.open('https://bit.ly/i-mkulima', '_blank');
@@ -45,7 +46,8 @@ function App() {
           <Route path='/payment-success' element={<PaymentSuccessPage />} />
           <Route path='/payment-failed' element={<PaymentFailedPage />} />
           <Route path='/interactions' element={<Interactions />} />
-          <Route path="/order-tracking" element={<OrderTracking/>}/>
+          <Route path="/order-tracking/:orderid" element={<OrderTracking/>}/>
+          <Route path="/initiate-delivery/:orderid" element={<DeliveryForm/>}/>
         </Routes>
       </Router>
       <div className="fixed bottom-6 right-6">

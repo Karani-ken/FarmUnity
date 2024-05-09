@@ -4,14 +4,14 @@ const dbHandler = require('../Database/dbHandler')
 //Todo: Create delivery
 const createDelivery = async (req, res) => {
     try {
-        const { order_id, customer_id, status, company_id, pickup_station } = req.body;
-        if (!order_id || !customer_id || !status || !company_id || !pickup_station) {
+        const { order_id, customer_id,company_id, pickup_station } = req.body;
+        if (!order_id || !customer_id  || !company_id || !pickup_station) {
             return res.status(400).json("All fields are required");
         }
         const deliveryData = {
             order_id,
             customer_id,
-            status,
+            status:"initiated",
             company_id,
             pickup_station
         }

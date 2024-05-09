@@ -14,11 +14,11 @@ function Shop() {
 
   useEffect(() => {
     dispatch(fetchProducts())
-    const filterProducts = ()=>{
-      const filteredProducts = products.filter(product => product.product_status === "available")
+    const filterProducts = async ()=>{
+      const filteredProducts = await products.filter(product => product.product_status === "available")
       setAvailableProducts(filteredProducts)
     }
-    filterProducts()
+    filterProducts()  
   }, [dispatch])
   const handleProductSelect = (product) => {
     navigate(`/product/${product.product_id}`)

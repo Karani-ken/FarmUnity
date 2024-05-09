@@ -11,7 +11,7 @@ const deliveries = require("./Routes/delivery.routes")
 const app = express();
 const port = process.env.PORT;
 app.use(cors())
-app.use(express.json())
+app.use(express.json())   
 
 //connect to a database
 dbHandler.pool.getConnection((err, connection)=>{
@@ -19,7 +19,7 @@ dbHandler.pool.getConnection((err, connection)=>{
     console.log("MySQL connected successfully");   
     dbHandler.initializeDatabase()
     .then(()=>{
-       connection.release()                
+       connection.release()                   
     })
     .catch((err)=>{   
         connection.release();   

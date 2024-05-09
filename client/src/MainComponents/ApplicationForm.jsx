@@ -47,7 +47,7 @@ const ApplicationForm = () => {
       formData.append('role', userData.role)
 
       // Send form data to the server using Axios
-      const response = await axios.post('https://api.fusionafricatech.co.ke/auth/register', formData, {
+      const response = await axios.post('http://localhost:4000/auth/register', formData, {
         headers: {
           'Content-Type': 'application/json' // Set content type for FormData
         }

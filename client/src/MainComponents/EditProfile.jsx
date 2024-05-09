@@ -18,7 +18,7 @@ const EditProfile = () => {
     const fetchUserProfile = async () => {
       try {
         const id = decoded.userId; // Replace 'user_id' with the actual user ID
-        const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/profile/${id}`);
+        const response = await axios.get(`http://localhost:4000/auth/profile/${id}`);
         const userProfile = response.data;
         setFormData(userProfile);
       } catch (error) {

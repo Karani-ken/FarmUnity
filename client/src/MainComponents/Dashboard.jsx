@@ -20,7 +20,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(fetchProducts())
     const fetchMyProducts = async () => {
-      const response = await axios.get(`https://api.fusionafricatech.co.ke/products/my-products/${decoded.userId}`)
+      const response = await axios.get(`http://localhost:4000/products/my-products/${decoded.userId}`)
       //console.log(response.data)
       setMyProducts(response.data)
     }
