@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { TextField, Typography, Box, Button, Grid } from '@mui/material';
 import { styled } from '@mui/system';
-import {Link }from 'react-router-dom'
+import {Link }from 'react-router-dom';
+import {toast} from 'react-toastify';
+import axios from 'axios'
 
 // Styled Box component with border and shadow
 const StyledBox = styled(Box)({
@@ -12,15 +14,26 @@ const StyledBox = styled(Box)({
 });
 
 export default function Register() {
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const companyData = {
-            companyName: formData.get('companyName'),
-            companyEmail: formData.get('companyEmail'),
-            password: formData.get('password')
-        };
-        console.log(companyData);
+        try{
+            const formData = new FormData(event.currentTarget);
+            const companyData = {
+                name: formData.get('companyName'),
+                email: formData.get('companyEmail'),
+                password: formData.get('password'),
+                role:"applied"
+            };
+           await axios.post("http://localhost:4000/auth/register",companyData );
+           toast.success("Success")
+
+        }catch(error){
+            console.error(error)
+            toast.error("Failed!!")       
+        }
+       
+        
+       
     };
 
     return (

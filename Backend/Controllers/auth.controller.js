@@ -17,7 +17,7 @@ const register = async (req, res) => {
         }
         if (!idPhoto) {  
             imageUrl= null;
-        } else {
+        } else {  
             // If idPhoto is provided, upload it to Cloudinary
             const data = await uploadToCloudinary(idPhoto, "test-one");
              imageUrl = data.url; // Assign the uploaded image URL to idPhoto

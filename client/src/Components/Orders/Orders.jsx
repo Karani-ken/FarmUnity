@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchOrders } from '../../features/Orders/OrdersSlice';
-import Stepper from '../OrderTracking/Stepper';
-import StepperControll from '../OrderTracking/StepperControll';
 import Card from './Card';
 import OrdersTable from './OrdersTable';
 
