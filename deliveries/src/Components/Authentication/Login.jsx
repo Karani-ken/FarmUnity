@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { TextField, Typography, Box, Button, Grid } from '@mui/material';
 import { styled } from '@mui/system';
-import {Link }from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'
+import axios from "axios"
 
 
 // Styled Box component with border and shadow
@@ -13,14 +15,19 @@ const StyledBox = styled(Box)({
 });
 
 export default function Login() {
-    const handleSubmit = (event) => {
+    const navigate = useNavigate()
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const companyData = {           
-            companyEmail: formData.get('companyEmail'),
-            password: formData.get('password')
+            email: formData.get('companyEmail'),
+            password: formData.get('password'),
         };
-        console.log(companyData);
+      const response =  await axios.post("http://localhost:4000/auth/login",companyData );
+      const token = response.data.token;
+      localStorage.setItem('token', token);  
+      toast.success("Login successfull")
+      navigate('/')      
     };
 
     return (

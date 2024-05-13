@@ -1,7 +1,10 @@
 import React from 'react'
 import { Card, Box, CardContent, Typography } from '@mui/material'
 import OrdersTable from '../Tables/OrdersTable';
+import {jwtDecode} from 'jwt-decode'
 const DeliveriesDashboard = () => {
+  const token = localStorage.getItem('token')
+  const decoded = jwtDecode(token)
   const bull = (
     <Box
       component="span"
@@ -32,7 +35,7 @@ const DeliveriesDashboard = () => {
   return (
 
     <div>
-      <Typography variant='h2' sx={{ fontSize: 24, fontWeight: "bold", textAlign: 'center', padding: 5 }}>G4S Deliveries </Typography>
+      <Typography variant='h2' sx={{ fontSize: 24, fontWeight: "bold", textAlign: 'center', padding: 5 }}>{decoded.name} </Typography>
       <Box className="shadow-md  block p-3  md:flex  ">
         <Card>
           <div className='bg-slate-500 m-2 rounded-lg '>

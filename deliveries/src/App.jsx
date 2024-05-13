@@ -3,13 +3,13 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "./Components/Navigation/Navbar"
-import DeliveriesDashboard from "./Components/Dashboards/DeliveriesDashboard";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Register from "./Components/Authentication/Register";
 import Login from "./Components/Authentication/Login";
+import Dashboard from "./Components/Dashboards/Dashboard";
 
 
 export default function App() {
@@ -19,7 +19,7 @@ export default function App() {
       <ToastContainer />
         <NavBar />
         <Routes>
-          <Route path="/" exact element={<DeliveriesDashboard />} />
+          <Route path="/" exact element={<Dashboard/>} />         
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
