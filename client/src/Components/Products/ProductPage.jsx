@@ -1,19 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 //import Products from "./../Assets/Fruits.json";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../features/Shopping Cart/CartSlice";
 import { fetchProducts } from "../../features/Products/ProductSlice";
+import axios from 'axios'
 function ProductPage() {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const [users, setUsers] = useState([])
+  const dispatch = useDispatch()
   const response = useSelector((state) => state.products)
+  let farmer;
   const { products } = response;
   useEffect(() => {
     dispatch(fetchProducts())
+    const getUsers = async () => {
+      const response = await axios.get(`http://localhost:4000/auth/get-users`)
+      setUsers(response.data)
+    }
+    getUsers()
   }, [dispatch])
   const product_id = parseInt(id, 10);
   const product = products.find((x) => x.product_id === product_id);
+  if(product){
+     farmer = users.find(u => u.ID === product?.user_id)
+  }  
+
   if (!product) {
     return (
       <div>
@@ -44,7 +56,15 @@ function ProductPage() {
         >
           Add to Cart
         </button>
+        <div className="p-3 my-2 shadow-lg rounded-lg">
+          <h1 className="font-bold text-2xl text-emerald-500">Farmer Details</h1>
+            <p>Name: {farmer?.name}</p>
+            <p>Phone: +254{farmer?.phone}</p>
+            <p>Address: {farmer.address ? farmer.address : 'N/A' }</p>
+            <p>County: {farmer.county ? farmer.county : 'N/A' }</p>
+        </div>
       </div>
+
     </div>
   );
 }

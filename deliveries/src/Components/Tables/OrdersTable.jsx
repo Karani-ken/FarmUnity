@@ -3,6 +3,7 @@ import {Box, Button} from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify'
 
 const columns = [
     { field: 'id', headerName: 'Delivery id', width: 30 },
@@ -50,6 +51,7 @@ const columns = [
                 <Button
                     variant="contained"
                     sx={{ backgroundColor: 'blue', color: 'white' }}
+                    onClick={()=>handleStatusChange("confirmed",row.id)}
                 >
                     Confirmed
                 </Button>
@@ -65,7 +67,8 @@ const columns = [
             return (
                 <Button
                     variant="contained"
-                    sx={{ backgroundColor: 'gray', color: 'white' }}                                
+                    sx={{ backgroundColor: 'gray', color: 'white' }}    
+                    onClick={()=>handleStatusChange("out for delivery",row.id)}                            
                 >
                    out for delivery
                 </Button>
@@ -82,7 +85,7 @@ const columns = [
                 <Button
                     variant="contained"
                     sx={{ backgroundColor: 'green', color: 'white' }} 
-                                    
+                    onClick={()=>handleStatusChange("delivered",row.id)}               
                 >
                     Delivered
                 </Button>
@@ -90,6 +93,16 @@ const columns = [
         },
     }
 ];
+
+const handleStatusChange = async (status, id) =>{
+    try {
+        await axios.put(`http://localhost:4000/deliveries/update-status/${id}`,{status})
+        toast.success("Order Updated")        
+    } catch (error) {
+        console.log(error);
+        toast.error("Could not update!!!")
+    }
+}
 
 export default function OrdersTable() {
     const [orders, setOrders] = useState([]);

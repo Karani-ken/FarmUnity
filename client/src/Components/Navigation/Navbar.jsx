@@ -6,7 +6,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const [isLoggedIn, setIsloggedIn] = useState(false);
   const token = localStorage.getItem('token');
-  const decoded = token ?  jwtDecode(token): null;
+  const decoded = token ? jwtDecode(token) : null;
 
   useEffect(() => {
     if (token) {
@@ -50,13 +50,19 @@ const Navbar = () => {
 
 
             ) : (
-              <li className="dropdown">
-                Sign up
-                <ul className="dropdown-content">
-                  <li><Link to='/seller-registration'>Farmer</Link></li>
-                  <li><Link to='/register'>Customer</Link></li>
-                </ul>
-              </li>
+              <>
+                <li className="dropdown">
+                  Sign up
+                  <ul className="dropdown-content">
+                    <li><Link to='/seller-registration'>Farmer</Link></li>
+                    <li><Link to='/register'>Customer</Link></li>
+                  </ul>
+                </li>
+                <li>
+                  <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>Log in</Link>
+                </li>
+              </>
+
 
             )}
 

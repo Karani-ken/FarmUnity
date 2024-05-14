@@ -12,9 +12,9 @@ function Shop() {
   const { products } = response;
   //console.log(products)
 
-  useEffect(() => {
-    dispatch(fetchProducts())
+  useEffect(() => {   
     const filterProducts = async ()=>{
+      dispatch(fetchProducts())
       const filteredProducts = await products.filter(product => product.product_status === "available")
       setAvailableProducts(filteredProducts)
     }

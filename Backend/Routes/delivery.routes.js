@@ -7,10 +7,10 @@ const { createDelivery,
     deleteDelivery } = require('../Controllers/delivery.controller')
 
 const router = express.Router();
-
+  
 router.post('/create', createDelivery);
-router.put('/update-delivery/:id', updateDeliveryStatus);
-router.get('/get-customers/:id', getCustomerDeliveries);
+router.put('/update-status/:id', updateDeliveryStatus);
+router.get('/get-customers/:id', getCustomerDeliveries);  
 router.get('/get-company/:id', getCompanyDeliveries);
 router.get('/get-delivery/:id', getDeliveryById);
 router.delete('/delete/:id', deleteDelivery);

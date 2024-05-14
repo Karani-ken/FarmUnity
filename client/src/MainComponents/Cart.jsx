@@ -35,7 +35,7 @@ function Cart() {
   };
 
   return (
-    <div className="text-center " style={{ margin: "0 5%" }}>
+    <div className="text-center h-screen overflow-y-scroll" style={{ margin: "0 5%" }}>
       <h1>Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <div>
