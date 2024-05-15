@@ -176,6 +176,18 @@ WHERE delivery_id = ?;`
 const deleteDelivery = `DELETE FROM deliveries
 WHERE delivery_id = ? AND status = 'cancel';`
 
+//FeedBack
+const showRatingsTable = 'SHOW TABLES LIKE "ratings"';
+const ratingTable = `CREATE TABLE ratings(
+  rating_id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  rating INT(5),
+  FOREIGN KEY (user_id) REFERENCES users(ID)
+);`
+const insertRating = `INSERT INTO ratings (user_id, rating)
+VALUES (?,?)`
+
+
 
 
 module.exports = {
@@ -232,5 +244,8 @@ module.exports = {
   getCustomerDeliveries,
   insertDelivery,
   deleteDelivery,
-  showDeliveriesTable
+  showDeliveriesTable,
+  showRatingsTable,
+  ratingTable,
+  insertRating
 };  

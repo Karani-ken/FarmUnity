@@ -42,7 +42,8 @@ const createTableIfNotExists = async () => {
         { name: 'likes', query: queries.showLikesTableQuery, createQuery: queries.likesTable },
         { name: 'orders', query: queries.showOrdersTable, createQuery: queries.createOrdersTable },
         { name: 'orderitems', query: queries.showOrderItemsTable, createQuery: queries.createOrderItemsTable },
-        { name: 'deliveries', query: queries.showDeliveriesTable, createQuery: queries.deliveryTable }
+        { name: 'deliveries', query: queries.showDeliveriesTable, createQuery: queries.deliveryTable },
+        { name: 'ratings', query: queries.showRatingsTable, createQuery: queries.ratingTable }
     ];
     try {
         for (const table of tables) {
@@ -377,6 +378,16 @@ const deleteCancelledDelivery = async (delivery_id) => {
         console.log(error);
     }
 };
+//Todo: Insert Rating
+const insertRating = async (ratingData) =>{
+    try {
+        const {user_id, rating} = ratingData;
+        await executeQuery(queries.insertRating,[user_id,rating])
+        console.log("Rating was created")
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 
@@ -424,6 +435,6 @@ module.exports = {
     getCustomerDeliveries,
     getDeliveryById,
     updateDeliveryStatus,
-    deleteCancelledDelivery
-
+    deleteCancelledDelivery,
+    insertRating
 }

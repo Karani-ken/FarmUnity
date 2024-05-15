@@ -142,13 +142,14 @@ const getDeliveryById = async (req, res) => {
         if (!id) {
             return res.status(400).json({ message: "Delivery ID is required" });
         }
-        const delivery = await dbHandler.getDeliveryById(id);
+        const delivery = await dbHandler.getDeliveryById(id);        
        // console.log(delivery)
         const company = await dbHandler.selectUserById(delivery[0].company_id);
+        console.log(company[0])
         const customer = await dbHandler.selectUserById(delivery[0].customer_id);
 
         // Retrieve order information
-        const order = await dbHandler.fetchOrderById(delivery[0].order_id);
+        //const order = await dbHandler.fetchOrderById(delivery[0].order_id);
         const orderItems = await dbHandler.orderWithItems(delivery[0].order_id);
 
         // Construct formatted delivery object
@@ -163,8 +164,10 @@ const getDeliveryById = async (req, res) => {
             address: customer[0].address,
             county: customer[0].county,
             pickup_station: delivery.pickup_station,
-            orderItems: orderItems // Array of order items
+            orderItems: orderItems, // Array of order items
+            company_id: company[0].ID
         };
+        console.log(formattedDelivery)
         return res.status(200).json(formattedDelivery);
     } catch (error) {
         console.log(error);
