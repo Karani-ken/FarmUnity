@@ -4,14 +4,14 @@ const dbHandler = require('../Database/dbHandler')
 //Todo: Create delivery
 const createDelivery = async (req, res) => {
     try {
-        const { order_id, customer_id,company_id, pickup_station } = req.body;
-        if (!order_id || !customer_id  || !company_id || !pickup_station) {
+        const { order_id, customer_id, company_id, pickup_station } = req.body;
+        if (!order_id || !customer_id || !company_id || !pickup_station) {
             return res.status(400).json("All fields are required");
         }
         const deliveryData = {
             order_id,
             customer_id,
-            status:"initiated",
+            status: "initiated",
             company_id,
             pickup_station
         }
@@ -142,8 +142,8 @@ const getDeliveryById = async (req, res) => {
         if (!id) {
             return res.status(400).json({ message: "Delivery ID is required" });
         }
-        const delivery = await dbHandler.getDeliveryById(id);        
-       // console.log(delivery)
+        const delivery = await dbHandler.getDeliveryById(id);
+        // console.log(delivery)
         const company = await dbHandler.selectUserById(delivery[0].company_id);
         console.log(company[0])
         const customer = await dbHandler.selectUserById(delivery[0].customer_id);
@@ -164,8 +164,9 @@ const getDeliveryById = async (req, res) => {
             address: customer[0].address,
             county: customer[0].county,
             pickup_station: delivery.pickup_station,
-            orderItems: orderItems, // Array of order items
-            company_id: company[0].ID
+            company_id: company[0].ID,
+            orderItems: orderItems// Array of order items
+
         };
         console.log(formattedDelivery)
         return res.status(200).json(formattedDelivery);

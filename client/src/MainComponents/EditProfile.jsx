@@ -49,8 +49,16 @@ const EditProfile = () => {
           formDataWithModifiedFields.append(key, formData[key]);
         }
       }
-      const response = await axios.put(`https://api.fusionafricatech.co.ke/auth/update-profile/${id}`, formDataWithModifiedFields);    
+      await axios.put(`http://localhost:4000/auth/update-profile/${id}`, formDataWithModifiedFields);
       toast.success("Profile Updated")
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        county: '',
+        address: '',
+        profilePic: null,
+      });
     } catch (error) {
       console.error('Error updating profile:', error);
       toast.error("Could not Update Profile")
