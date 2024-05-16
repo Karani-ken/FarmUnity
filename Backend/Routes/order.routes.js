@@ -9,7 +9,8 @@ const {
     getAllUserUnpaidOrders,
     stripePayment,
     validatePayment,
-    orderItems
+    orderItems,
+    getFarmerSales
 } = require('../Controllers/orders.controller');
 
 const router = express.Router();
@@ -36,6 +37,8 @@ router.post('/stripe-payment/:orderId', stripePayment);
 router.post('/validate-payment/:orderId', validatePayment);
 //get  order items and invoice
 router.get('/order-items/:orderId', orderItems )
+//get all farmer sales
+router.get('/my-sales/:id',getFarmerSales);
 
 
 

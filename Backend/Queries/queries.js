@@ -78,7 +78,7 @@ const createOrdersTable = `CREATE TABLE orders (
   stripeSessionId VARCHAR(255),
   paymentIntentId VARCHAR(255), 
   status VARCHAR(50)
-);`;
+);`
 
 const createOrderItemsTable = `CREATE TABLE orderitems (
   order_item_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -89,7 +89,7 @@ const createOrderItemsTable = `CREATE TABLE orderitems (
   product_price DECIMAL(10, 2) NOT NULL,
   quantity INT NOT NULL,
   FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
-);`;
+);`
 
 const createOrder = `INSERT INTO orders (user_id, status) VALUES (?, ?)`; // Only inserting core order details
 const insertOrderItems = `INSERT INTO orderitems (order_id, product_id, product_name, product_image, product_price, quantity) VALUES (?, ?, ?, ?, ?, ?)`; // Inserting order items
@@ -105,6 +105,24 @@ FROM orders AS order_tbl
 JOIN orderitems AS order_item_tbl ON order_tbl.order_id = order_item_tbl.order_id
 WHERE order_tbl.order_id = ?;
 `
+const getFarmerOrders = `SELECT 
+p.product_id, 
+p.product_name, 
+SUM(oi.quantity) AS total_quantity_bought,
+SUM(oi.quantity * p.product_price) AS total_amount_sold
+FROM 
+orderitems oi
+INNER JOIN 
+orders o ON oi.order_id = o.order_id
+INNER JOIN 
+products p ON oi.product_id = p.product_id
+WHERE 
+p.user_id = ?
+GROUP BY 
+p.product_id, p.product_name;
+
+`
+
 
 
 // Posts queries
@@ -247,5 +265,6 @@ module.exports = {
   showDeliveriesTable,
   showRatingsTable,
   ratingTable,
-  insertRating
+  insertRating,
+  getFarmerOrders
 };  

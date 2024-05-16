@@ -13,32 +13,46 @@ const Dashboard = () => {
   const token = localStorage.getItem('token');
   const decoded = jwtDecode(token);
   const [myProducts, setMyProducts] = useState([])
+  const [sales, setSales] = useState([])
   const response = useSelector((state) => state.products)
   const [tableData, setTableData] = useState([])
   const { products } = response;
- // console.log(products)
+  const [totalAmount, setTotalAmount] = useState(0);
+  // console.log(products)
   useEffect(() => {
     dispatch(fetchProducts())
     const fetchMyProducts = async () => {
       const response = await axios.get(`http://localhost:4000/products/my-products/${decoded.userId}`)
-      //console.log(response.data)
+      //console.log(response.data)      
       setMyProducts(response.data)
     }
-
     const filterProducts = () => {
       const distinctProducts = products.filter(product => product.user_id === decoded.userId)
       setTableData(distinctProducts)
       //console.log(setTableData)
     }
-    fetchMyProducts()
-    filterProducts()
+    const getMySales = async () => {
+      const response = await axios.get(`http://localhost:4000/orders/my-sales/${decoded.userId}`)
+      if (response.data) {
+        const salesData = response.data;
+        let totalAmount = 0;
+        salesData.forEach(sale => {
+          totalAmount += sale.total_amount_sold
+        })
+        setSales(response.data)
+        setTotalAmount(totalAmount)
 
-  }, [token, dispatch]);
+      }
+    }
+    filterProducts()
+    fetchMyProducts()
+    getMySales()
+  }, [token, dispatch, decoded.userId]);
 
   const handleAddProduct = () => {
     navigate('/add-product')
   }
-  const handleEditProfile = () =>{
+  const handleEditProfile = () => {
     navigate('/edit-profile')
   }
   const makeUnavailable = async (product_id) => {
@@ -47,8 +61,8 @@ const Dashboard = () => {
       const statusData = {
         status
       }
-       await axios.put(`https://api.fusionafricatech.co.ke/products/update-status/${product_id}`, statusData)
-       toast.success("Product status updated")
+      await axios.put(`https://api.fusionafricatech.co.ke/products/update-status/${product_id}`, statusData)
+      toast.success("Product status updated")
     } catch (error) {
       console.log(error)
       toast.error("Could not update")
@@ -61,14 +75,14 @@ const Dashboard = () => {
       const statusData = {
         status
       }
-       await axios.put(`https://api.fusionafricatech.co.ke/products/update-status/${product_id}`, statusData)
-       toast.success("Product status updated")
+      await axios.put(`https://api.fusionafricatech.co.ke/products/update-status/${product_id}`, statusData)
+      toast.success("Product status updated")
     } catch (error) {
       console.log(error)
       toast.error("Could not update")
     }
   }
-  const deleteProduct = async (product_id) =>{
+  const deleteProduct = async (product_id) => {
     try {
       await axios.delete(`https://api.fusionafricatech.co.ke/products/delete/${product_id}`)
       toast.success("Product was deleted")
@@ -91,6 +105,16 @@ const Dashboard = () => {
           <div className="shadow-lg text-left p-3 bg-rose-500 m-2 text-white rounded-lg">
             <h3 className="font-semibold  text-center">My Products Count</h3>
             <h1 className='text-center font-bold text-4xl'>{myProducts.length}</h1>
+          </div>
+          <div className="shadow-lg text-left p-3 bg-slate-500 m-2 text-white rounded-lg">
+            <h3 className="font-semibold  text-center">Total Products sold</h3>
+            <h1 className='text-center font-bold text-4xl'>{sales.length}</h1>
+          </div>
+          <div className="shadow-lg text-left p-3 bg-sky-500 m-2 text-white rounded-lg">
+            <h3 className="font-semibold  text-center">Total earnings</h3>
+            <h1 className='text-center font-bold text-4xl'>
+             Kes.{totalAmount} 
+            </h1>
           </div>
           <button className="btn btn-primary h-25 m-2 text-center" onClick={handleEditProfile}>Edit profile</button> <br />
           <button className="btn btn-primary h-25 m-2 text-center" onClick={handleAddProduct}>Add new Product</button>

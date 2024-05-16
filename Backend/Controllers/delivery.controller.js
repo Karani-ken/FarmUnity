@@ -145,7 +145,7 @@ const getDeliveryById = async (req, res) => {
         const delivery = await dbHandler.getDeliveryById(id);
         // console.log(delivery)
         const company = await dbHandler.selectUserById(delivery[0].company_id);
-        console.log(company[0])
+        console.log(company[0].id)
         const customer = await dbHandler.selectUserById(delivery[0].customer_id);
 
         // Retrieve order information

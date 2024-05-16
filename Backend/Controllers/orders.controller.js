@@ -101,8 +101,8 @@ const stripePayment = async (req, res) => {
 
     try {
         const order_id = req.params.orderId;
-        const order = await dbHandler.fetchOrderById(order_id)  
-      
+        const order = await dbHandler.fetchOrderById(order_id)
+
         if (order[0].status === "Approved") {
             return res.status(500).json("Order is already paid for")
         }
@@ -145,7 +145,7 @@ const stripePayment = async (req, res) => {
             order_id
         }
 
-        await dbHandler.updateOrder(updatedOrder);        
+        await dbHandler.updateOrder(updatedOrder);
         res.status(201).json({ stripeSessionUrl })
     } catch (error) {
         res.status(500).json(error)
@@ -241,7 +241,22 @@ const orderItems = async (req, res) => {
 
     } catch (error) {
         console.error('Error fetching order items:', error);
-        res.status(500).json({ error: 'Error fetching order items' });
+        res.status(500).json({ error: 'Error fetching order items' + error });
+    }
+}
+//get farmer sales
+const getFarmerSales = async (req, res) => {
+    try {
+        const {id} = req.params
+        const response = await dbHandler.getFarmerSales(id);
+
+        if(response){
+            return res.status(200).json(response)
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json(error)
     }
 }
 
@@ -259,5 +274,6 @@ module.exports = {
     stripePayment,
     validatePayment,
     orderItems,
+    getFarmerSales
 
 }

@@ -298,6 +298,17 @@ const orderWithItems = async (order_id) => {
         console.log(error)
     }
 }
+//get Farmer Orders
+const getFarmerSales = async(user_id) =>{
+    try {
+        const results = await executeQuery(queries.getFarmerOrders,[user_id])
+        if(results){
+            return results;
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 //Posts
 //insert a post
@@ -436,5 +447,6 @@ module.exports = {
     getDeliveryById,
     updateDeliveryStatus,
     deleteCancelledDelivery,
-    insertRating
+    insertRating,
+    getFarmerSales
 }
