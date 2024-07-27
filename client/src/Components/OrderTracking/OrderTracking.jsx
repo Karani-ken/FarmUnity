@@ -16,7 +16,7 @@ const OrderTracking = () => {
             try {
                 const token = localStorage.getItem('token');
                 const decoded = jwtDecode(token);
-                const response = await axios.get(`http://localhost:4000/deliveries/get-customers/${decoded.userId}`);
+                const response = await axios.get(`https://api.fusionafricatech.co.ke/deliveries/get-customers/${decoded.userId}`);
                 console.log(response.data)
                 const delivery = response.data.find(item => item.order_id.toString() === orderid);
                 if (delivery) {

@@ -11,12 +11,12 @@ const Blogs = () => {
 
     useEffect(() => {
         const fetchBlogs = async () => {
-            const response = await axios.get('http://localhost:4000/posts/all-posts')
+            const response = await axios.get('https://api.fusionafricatech.co.ke/posts/all-posts')
             //console.log(response.data)
             setBlogs(response.data)
         }
         const getUsers = async () => {
-            const response = await axios.get(`http://localhost:4000/auth/get-users`)
+            const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/get-users`)
             setUsers(response.data)
         }
         if (token) {

@@ -16,7 +16,7 @@ export default function OrdersTable({ orders }) {
     const decoded = jwtDecode(token);
     useEffect(() => {
         const fetchDeliveries = async () => {
-            const response = await axios.get(`http://localhost:4000/deliveries/get-customers/${decoded.userId}`)
+            const response = await axios.get(`https://api.fusionafricatech.co.ke/deliveries/get-customers/${decoded.userId}`)
             console.log(response.data)
             setDeliveries(response.data)
         }

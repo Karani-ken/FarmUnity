@@ -17,7 +17,7 @@ function Login() {
   const handleSubmit =async (e)=>{
     e.preventDefault();
    try {
-    const response = await axios.post('http://localhost:4000/auth/login', userData)
+    const response = await axios.post('https://api.fusionafricatech.co.ke/auth/login', userData)
     const token = response.data.token;
     localStorage.setItem('token', token);  
     toast.success("Login successfull")

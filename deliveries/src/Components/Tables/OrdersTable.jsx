@@ -96,7 +96,7 @@ const columns = [
 
 const handleStatusChange = async (status, id) =>{
     try {
-        await axios.put(`http://localhost:4000/deliveries/update-status/${id}`,{status})
+        await axios.put(`https://api.fusionafricatech.co.ke/deliveries/update-status/${id}`,{status})
         toast.success("Order Updated")        
     } catch (error) {
         console.log(error);

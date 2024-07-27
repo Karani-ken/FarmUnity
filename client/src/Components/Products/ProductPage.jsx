@@ -15,7 +15,7 @@ function ProductPage() {
   useEffect(() => {
     dispatch(fetchProducts())
     const getUsers = async () => {
-      const response = await axios.get(`http://localhost:4000/auth/get-users`)
+      const response = await axios.get(`https://api.fusionafricatech.co.ke/auth/get-users`)
       setUsers(response.data)
     }
     getUsers()

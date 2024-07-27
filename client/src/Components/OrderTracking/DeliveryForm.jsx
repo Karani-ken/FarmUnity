@@ -19,7 +19,7 @@ const DeliveryForm = () => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:4000/auth/get-users');
+                const response = await axios.get('https://api.fusionafricatech.co.ke/auth/get-users');
                 const filterCompanies = response.data.filter(c => c.role === "deliverer");
                 if (filterCompanies) {
                     console.log(filterCompanies);
@@ -56,7 +56,7 @@ const DeliveryForm = () => {
                 pickup_station: deliveryDetails.pickup_station
             };
             console.log(DeliveryData);
-            await axios.post('http://localhost:4000/deliveries/create', DeliveryData);
+            await axios.post('https://api.fusionafricatech.co.ke/deliveries/create', DeliveryData);
             toast.success("Delivery Initiated!!");
         } catch (error) {
             console.error('Error submitting delivery:', error);
